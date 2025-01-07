@@ -1,0 +1,201 @@
+{
+  "Portal": {
+    "title": "iEvents Portal",
+    "adminButton": "Admin",
+    "frontendButton": "Website",
+    "userButton": "SAAS Portal"
+  },
+  "Auth": {
+    "adminLogin": "Admin Login",
+    "userLogin": "User Login",
+    "username": "Username",
+    "password": "Password",
+    "login": "Log In",
+    "logout": "Log Out",
+    "loginFailed": "Login failed. Please check your credentials.",
+    "register": "Register",
+    "registering": "Registering...",
+    "email": "Email",
+    "confirmPassword": "Confirm Password",
+    "registerSuccess": "Registration Successful",
+    "registerSuccessDescription": "Your account has been created successfully",
+    "registerError": "Registration Error",
+    "registerErrorDescription": "An error occurred during registration",
+    "loginSuccess": "Login Successful",
+    "loginSuccessDescription": "You have been logged in successfully",
+    "loginError": "Login Error",
+    "loginErrorDescription": "An error occurred during login",
+    "captcha": "Captcha",
+    "invalidCaptcha": "Invalid captcha",
+    "loggingIn": "Logging in..."
+  },
+  "Frontend": {
+    "title": "iEvents",
+    "nav": {
+      "home": "Home",
+      "events": "Events",
+      "venues": "Venues",
+      "pricing": "Pricing",
+      "about": "About"
+    },
+    "hero": {
+      "title": "Discover Amazing Events",
+      "subtitle": "and Perfect Venues",
+      "description": "iEvents helps you find and organize the best events in stunning locations.",
+      "cta": "Get Started"
+    },
+    "featuredEvents": {
+      "title": "Featured Events",
+      "learnMore": "Learn More"
+    },
+    "recommendedVenues": {
+      "title": "Recommended Venues",
+      "viewDetails": "View Details"
+    },
+    "footer": {
+      "description": "iEvents is your go-to platform for discovering and organizing unforgettable events.",
+      "solutions": "Solutions",
+      "support": "Support",
+      "events": "Events",
+      "venues": "Venues",
+      "pricing": "Pricing",
+      "about": "About Us",
+      "contact": "Contact",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "allRightsReserved": "All rights reserved."
+    }
+  },
+
+  "Shared": {
+    "searchPlaceholder": "Search...",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "Events": {
+    "title": "Event",
+
+    "createSuccess": "Event created successfully",
+    "createSuccessDescription": "Your event has been successfully created.",
+    "createError": "Failed to create an event",
+    "createErrorDescription": "An error occurred while creating the event. Please try again later.",
+    "unauthorized": "Unauthorized",
+    "pleaseLogin": "Please log in before creating an event.",
+    "loading": "Loading...",
+    "form": {
+      "createEvent": "Create an event",
+      "title": "Title",
+      "description": "Description",
+      "date": "Date",
+      "location": "Location",
+      "isPaid": "Is it paid?",
+      "isPaidDescription": "Is this a paid event?",
+      "price": "Price",
+      "category": "Category",
+      "selectCategory": "Select category",
+      "industry": "Industry",
+      "selectIndustry": "Select industry",
+      "business": "Business",
+      "selectBusiness": "Select business type",
+      "submit": "Submit",
+      "status": "Status",
+      "actions": "Actions",
+      "fetchError": "Failed to fetch events",
+      "fetchErrorDescription": "An error occurred while fetching events. Please try again later."
+    }
+  },
+
+  "Venues": {
+    "title": "Venues",
+    "viewDetails": "View Details",
+    "filterCategory": "Filter by Category",
+    "filterLocation": "Filter by Location",
+    "categoryConference": "Conference",
+    "categoryExhibition": "Exhibition",
+    "categoryBanquet": "Banquet",
+    "locationDowntown": "Downtown",
+    "locationSuburban": "Suburban",
+    "locationResort": "Resort"
+  },
+  "Pricing": {
+    "title": "Pricing",
+    "freePlan": "Free Plan",
+    "freePrice": "$0/month",
+    "freeFeature1": "Basic features",
+    "freeFeature2": "Limited usage",
+    "freeCtaText": "Get Started",
+    "proPlan": "Pro Plan",
+    "proPrice": "$99/month",
+    "proFeature1": "Advanced features",
+    "proFeature2": "Unlimited usage",
+    "proCtaText": "Upgrade to Pro",
+    "enterprisePlan": "Enterprise Plan",
+    "enterprisePrice": "Custom",
+    "enterpriseFeature1": "Custom features",
+    "enterpriseFeature2": "Dedicated support",
+    "enterpriseCtaText": "Contact Sales"
+  },
+  "About": {
+    "title": "About Us",
+    "missionTitle": "Our Mission",
+    "missionContent": "iEvents is dedicated to revolutionizing the event management industry...",
+    "teamTitle": "Our Team",
+    "teamContent": "We are a diverse group of professionals passionate about events...",
+    "contactTitle": "Contact Us",
+    "contactContent": "Get in touch with us at contact@ievents.com or call us at +1 (123) 456-7890."
+  },
+
+  "User": {
+    "dashboard": {
+      "title": "User Activity Management"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "eventInfo": "Event Info",
+      "registration": "Registration",
+      "speakers": "Speakers",
+      "schedule": "Schedule",
+      "exhibitors": "Exhibitors",
+      "resources": "Resources",
+      "news": "News",
+      "videos": "Videos",
+      "photos": "Photos",
+      "livestream": "Livestream",
+      "interaction": "Interaction",
+      "back": "Back to Dashboard"
+    },
+    "eventInfo": {
+      "title": "Event Information"
+    },
+    "registration": {
+      "title": "Event Registration"
+    },
+    "speakers": {
+      "title": "Event Speakers"
+    }
+  },
+  "Admin": {
+    "dashboard": {
+      "title": "Admin Control Panel"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "websiteManagement": "Website Management",
+      "eventManagement": "Event Management",
+      "venueManagement": "Venue Management",
+      "interactionManagement": "Interaction Management",
+      "dataStatistics": "Data Statistics",
+      "permissionManagement": "Permission Management",
+      "back": "Back to Dashboard"
+    },
+    "websiteManagement": {
+      "title": "Website Management"
+    },
+    "eventManagement": {
+      "title": "Event Management"
+    },
+    "venueManagement": {
+      "title": "Venue Management"
+    }
+  }
+}
