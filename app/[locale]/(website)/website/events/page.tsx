@@ -16,7 +16,7 @@ export default function EventsPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("/api/events?approved=true");
+      const response = await fetch("/api/admin/events?approved=true");
       if (!response.ok) {
         throw new Error("Failed to fetch events");
       }
@@ -72,4 +72,3 @@ export default function EventsPage() {
     </div>
   );
 }
-
