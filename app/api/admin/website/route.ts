@@ -1,26 +1,39 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request) {
-  // 在实际应用中，您需要从数据库获取网站内容
-  const websiteContent = {
-    hero: {
-      title: "Welcome to iEvents",
-      description: "The best platform for managing your events"
-    },
-    featuredEvents: [
-      { id: 1, title: "Tech Conference 2023", date: "2023-09-15" },
-      { id: 2, title: "Music Festival", date: "2023-10-01" }
-    ],
-    // 添加更多网站内容...
-  };
-
-  return NextResponse.json(websiteContent);
+export async function GET() {
+  try {
+    const websiteContent = await prisma.website.findFirst();
+    return NextResponse.json(websiteContent || {});
+  } catch (error) {
+    console.error("Error fetching website content:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
-  const data = await request.json();
-  // 在实际应用中，您需要将数据保存到数据库
-  console.log("Received website content update:", data);
-  return NextResponse.json({ message: "Website content updated successfully" });
+  try {
+    const data = await request.json();
+    const updatedContent = await prisma.website.upsert({
+      where: { id: 1 }, // Assuming there's only one record for website content
+      update: {
+        heroTitle: data.hero.title,
+        heroSubtitle: data.hero.description,
+      },
+      create: {
+        heroTitle: data.hero.title,
+        heroSubtitle: data.hero.description,
+      },
+    });
+    return NextResponse.json(updatedContent);
+  } catch (error) {
+    console.error("Error updating website content:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
-

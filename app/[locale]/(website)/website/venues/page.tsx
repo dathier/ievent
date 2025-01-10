@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { VenueSearch } from "@/components/website/venues/VenueSearch";
 import { VenueList } from "@/components/website/venues/VenueList";
-import { Pagination } from "@/components/website/shared/Pagination";
+import { Pagination } from "@/components/ui/pagination";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function VenuesPage() {
   const [venues, setVenues] = useState([]);
@@ -16,7 +17,7 @@ export default function VenuesPage() {
 
   const fetchVenues = async () => {
     try {
-      const response = await fetch("/api/venues");
+      const response = await fetch("/api/website/venues");
       if (!response.ok) {
         throw new Error("Failed to fetch venues");
       }
@@ -51,15 +52,22 @@ export default function VenuesPage() {
   const totalPages = Math.ceil(venues.length / venuesPerPage);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Venues</h1>
-      <VenueSearch
-        onSearch={handleSearch}
-        onFilterCategory={handleFilterCategory}
-        onFilterLocation={handleFilterLocation}
-      />
+    <div className="container mx-auto px-4 py-8 space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-3xl font-bold">Venues</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <VenueSearch
+            onSearch={handleSearch}
+            onFilterCategory={handleFilterCategory}
+            onFilterLocation={handleFilterLocation}
+          />
+        </CardContent>
+      </Card>
       <VenueList venues={paginatedVenues} />
       <Pagination
+        className="justify-center"
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}

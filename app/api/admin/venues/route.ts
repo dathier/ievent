@@ -1,20 +1,35 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request) {
-  // 在实际应用中，您需要从数据库获取场地列表
-  const venues = [
-    { id: 1, name: "Grand Conference Center", location: "New York", capacity: 1000 },
-    { id: 2, name: "Seaside Convention Hall", location: "Miami", capacity: 500 },
-    // 添加更多场地...
-  ];
-
-  return NextResponse.json(venues);
+export async function GET() {
+  try {
+    const venues = await prisma.venue.findMany();
+    return NextResponse.json(venues);
+  } catch (error) {
+    console.error("Error fetching venues:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
-  const data = await request.json();
-  // 在实际应用中，您需要将新场地保存到数据库
-  console.log("Received new venue:", data);
-  return NextResponse.json({ message: "Venue created successfully", id: Date.now() });
+  try {
+    const data = await request.json();
+    const newVenue = await prisma.venue.create({
+      data: {
+        name: data.name,
+        location: data.location,
+        capacity: data.capacity,
+      },
+    });
+    return NextResponse.json(newVenue);
+  } catch (error) {
+    console.error("Error creating venue:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
-

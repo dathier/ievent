@@ -5,29 +5,9 @@
     "frontendButton": "Website",
     "userButton": "SAAS Portal"
   },
-  "Auth": {
-    "adminLogin": "Admin Login",
-    "userLogin": "User Login",
-    "username": "Username",
-    "password": "Password",
-    "login": "Log In",
-    "logout": "Log Out",
-    "loginFailed": "Login failed. Please check your credentials.",
-    "register": "Register",
-    "registering": "Registering...",
-    "email": "Email",
-    "confirmPassword": "Confirm Password",
-    "registerSuccess": "Registration Successful",
-    "registerSuccessDescription": "Your account has been created successfully",
-    "registerError": "Registration Error",
-    "registerErrorDescription": "An error occurred during registration",
-    "loginSuccess": "Login Successful",
-    "loginSuccessDescription": "You have been logged in successfully",
-    "loginError": "Login Error",
-    "loginErrorDescription": "An error occurred during login",
-    "captcha": "Captcha",
-    "invalidCaptcha": "Invalid captcha",
-    "loggingIn": "Logging in..."
+  "Home": {
+    "featuredEvents": "Featured Events",
+    "learnMore": "Learn More"
   },
   "Frontend": {
     "title": "iEvents",
@@ -36,13 +16,16 @@
       "events": "Events",
       "venues": "Venues",
       "pricing": "Pricing",
-      "about": "About"
+      "about": "About",
+      "login": "Login",
+      "signup": "Sign Up"
     },
     "hero": {
       "title": "Discover Amazing Events",
       "subtitle": "and Perfect Venues",
       "description": "iEvents helps you find and organize the best events in stunning locations.",
-      "cta": "Get Started"
+      "cta": "Get Started",
+      "learnMore": "Learn More"
     },
     "featuredEvents": {
       "title": "Featured Events",
@@ -66,15 +49,25 @@
       "allRightsReserved": "All rights reserved."
     }
   },
-
   "Shared": {
     "searchPlaceholder": "Search...",
     "previous": "Previous",
     "next": "Next"
   },
   "Events": {
-    "title": "Event",
-
+    "title": "Events",
+    "filterCategory": "Filter by Category",
+    "filterIndustry": "Filter by Industry",
+    "filterBusiness": "Filter by Business",
+    "categoryConference": "Conference",
+    "categoryWorkshop": "Workshop",
+    "categorySeminar": "Seminar",
+    "industryTechnology": "Technology",
+    "industryFinance": "Finance",
+    "industryHealthcare": "Healthcare",
+    "businessStartup": "Startup",
+    "businessNonprofit": "Nonprofit",
+    "businessEnterprise": "Enterprise",
     "createSuccess": "Event created successfully",
     "createSuccessDescription": "Your event has been successfully created.",
     "createError": "Failed to create an event",
@@ -82,29 +75,31 @@
     "unauthorized": "Unauthorized",
     "pleaseLogin": "Please log in before creating an event.",
     "loading": "Loading...",
-    "form": {
-      "createEvent": "Create an event",
-      "title": "Title",
-      "description": "Description",
-      "date": "Date",
-      "location": "Location",
-      "isPaid": "Is it paid?",
-      "isPaidDescription": "Is this a paid event?",
-      "price": "Price",
-      "category": "Category",
-      "selectCategory": "Select category",
-      "industry": "Industry",
-      "selectIndustry": "Select industry",
-      "business": "Business",
-      "selectBusiness": "Select business type",
-      "submit": "Submit",
-      "status": "Status",
-      "actions": "Actions",
-      "fetchError": "Failed to fetch events",
-      "fetchErrorDescription": "An error occurred while fetching events. Please try again later."
+    "learnMore": "Learn More",
+    "validationError": "Validation Error",
+    "search": {
+      "searchPlaceholder": "Search events...",
+      "searchButton": "Search",
+      "categoryPlaceholder": "Filter by Category",
+      "industryPlaceholder": "Filter by Industry",
+      "businessPlaceholder": "Filter by Business Type",
+      "categories": {
+        "conference": "Conference",
+        "workshop": "Workshop",
+        "seminar": "Seminar"
+      },
+      "industries": {
+        "technology": "Technology",
+        "healthcare": "Healthcare",
+        "finance": "Finance"
+      },
+      "businessTypes": {
+        "b2b": "B2B",
+        "b2c": "B2C",
+        "b2g": "B2G"
+      }
     }
   },
-
   "Venues": {
     "title": "Venues",
     "viewDetails": "View Details",
@@ -144,7 +139,6 @@
     "contactTitle": "Contact Us",
     "contactContent": "Get in touch with us at contact@ievents.com or call us at +1 (123) 456-7890."
   },
-
   "User": {
     "dashboard": {
       "title": "User Activity Management"
@@ -175,10 +169,25 @@
     }
   },
   "Admin": {
-    "dashboard": {
-      "title": "Admin Control Panel"
+    "Website": {
+      "title": "Website Management",
+      "heroSection": "Manage your website content with ease",
+      "heroTitle": "Website Management",
+      "heroDescription": "Easily update your website content, including text, images, and videos.",
+      "saveChanges": "Save Changes",
+      "updateError": "Failed to update website content",
+      "updateErrorDescription": "An error occurred while updating the website content. Please try again later.",
+      "updateSuccess": "Website content updated successfully",
+      "updateSuccessDescription": "Your website content has been successfully updated."
     },
-    "nav": {
+    "dashboard": {
+      "title": "Dashboard",
+      "totalEvents": "Total Events",
+      "totalVenues": "Total Venues",
+      "totalUsers": "Total Users"
+    },
+    "Sidebar": {
+      "title": "Control Panel",
       "dashboard": "Dashboard",
       "websiteManagement": "Website Management",
       "eventManagement": "Event Management",
@@ -187,6 +196,327 @@
       "dataStatistics": "Data Statistics",
       "permissionManagement": "Permission Management",
       "back": "Back to Dashboard"
+    },
+    "Events": {
+      "title": "Event Management",
+      "eventTitle": "Event Title",
+      "eventDescription": "Event Description",
+      "eventDate": "Event Date",
+      "eventStatus": "Event Status",
+      "imageUrl": "Cover Image",
+      "imageUrlDescription": "Upload a cover image for the event",
+      "eventType": "Event Type",
+      "industryType": "Industry Type",
+      "businessType": "Business Type",
+      "selectEventType": "Select Event Type",
+      "selectIndustryType": "Select Industry Type",
+      "selectBusinessType": "Select Business Type",
+      "selectIndustry": "Select Industry",
+      "selectBusiness": "Select Business Type",
+      "requiresRegistration": "Requires Registration",
+      "requiresRegistrationDescription": "Does this event require registration?",
+      "isPublished": "Is Published",
+      "isPublishedDescription": "Is this event published?",
+      "isFeatured": "Is Featured",
+      "isFeaturedDescription": "Is this event featured?",
+      "createEvent": "Create Event",
+      "editEvent": "Edit Event",
+      "deleteEvent": "Delete Event",
+      "fetchError": "Failed to fetch events",
+      "fetchErrorDescription": "An error occurred while fetching events. Please try again later.",
+      "updateSuccess": "Event updated successfully",
+      "updateSuccessDescription": "The event has been successfully updated.",
+      "updateError": "Failed to update event",
+      "updateErrorDescription": "An error occurred while updating the event. Please try again later.",
+      "deleteSuccess": "Event deleted successfully",
+      "deleteSuccessDescription": "The event has been successfully deleted.",
+      "deleteError": "Failed to delete event",
+      "deleteErrorDescription": "An error occurred while deleting the event. Please try again later.",
+      "eventsList": "Event List",
+      "eventDetails": "Event Details",
+      "eventLocation": "Event Location",
+      "isPaid": "Is Paid",
+      "isPaidDescription": "Is this event paid?",
+      "ticketPrice": "Ticket Price",
+      "no": "No",
+      "yes": "Yes",
+      "creating": "Creating Event...",
+      "createError": "Failed to create event",
+      "createSuccess": "Event created successfully",
+      "createSuccessDescription": "The event has been successfully created.",
+      "actions": "Actions",
+      "openMenu": "Open menu",
+      "eventActions": "Event actions",
+      "manage": "Manage",
+      "edit": "Edit",
+      "review": "Review",
+      "delete": "Delete",
+      "save": "Save",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "businessTypes": {
+        "b2g": "B2G",
+        "b2b": "B2B",
+        "b2c": "B2C"
+      },
+      "eventTypes": {
+        "conference": "Conference",
+        "workshop": "Workshop",
+        "seminar": "Seminar"
+      },
+      "industryTypes": {
+        "finance": "Finance",
+        "insurance": "Insurance",
+        "education": "Education",
+        "healthcare": "Healthcare",
+        "technology": "Technology",
+        "other": "Other"
+      },
+      "statusName": "Review Status",
+      "selectStatus": "Select Status",
+      "status": {
+        "undefined": "Undefined",
+        "pending": "Pending",
+        "rejected": "Rejected",
+        "approved": "Approved"
+      },
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "unpublish": "Unpublish",
+      "publish": "Publish",
+      "unfeature": "Unfeature",
+      "feature": "Feature",
+      "free": "Free",
+      "approve": "Approve",
+      "reject": "Reject",
+      "approved": "Approved",
+      "success": "Success",
+      "rejected": "Rejected",
+      "destructive": "Destructive Action",
+      "default": "Default",
+      "reviewEvent": "Review Event",
+      "deleteConfirmation": "Are you sure you want to delete this event?",
+      "eventUnfeatured": "Event has been unfeatured.",
+      "eventUpdateSuccess": "Event has been updated.",
+      "eventUnpublished": "Event has been unpublished.",
+      "eventFeatured": "Event has been featured.",
+      "published": "Published",
+      "unpublished": "Unpublished",
+      "featured": "Featured",
+      "notFeatured": "Not Featured",
+      "editEventDescription": "Edit Event Description",
+      "saveChanges": "Save Changes"
+    },
+    "EventManagement": {
+      "title": "Event Management",
+      "loading": "Loading event...",
+      "eventManagement": "Managing Event: {eventTitle}",
+      "registrations": "Registrations",
+      "guests": "Guests",
+      "schedule": "Schedule",
+      "exhibitors": "Exhibitors",
+      "materials": "Materials",
+      "news": "News",
+      "videos": "Videos",
+      "photos": "Photos",
+      "livestream": "Livestream",
+      "editEvent": "Edit Event",
+      "reviewEvent": "Review Event",
+      "deleteEvent": "Delete Event",
+      "confirmDelete": "Are you sure you want to delete this event?",
+      "deleteDescription": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "statusUpdate": "Update Status",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "updateSuccess": "Event updated successfully",
+      "updateError": "Failed to update event",
+      "deleteSuccess": "Event deleted successfully",
+      "deleteError": "Failed to delete event",
+      "Registrations": {
+        "dailyRegistrations": "Today's Registrations",
+        "totalRegistrations": "Total Registrations",
+        "weeklyRegistrations": "This Week's Registrations",
+        "monthlyRegistrations": "This Month's Registrations",
+        "registrationsByType": "Registrations by Type",
+        "title": "Registration List",
+        "addRegistration": "Add Registration",
+        "editRegistration": "Edit Registration",
+        "deleteRegistration": "Delete Registration",
+        "reviewRegistration": "Review Registration",
+        "name": "Name",
+        "phone": "Phone",
+        "email": "Email",
+        "company": "Company",
+        "type": "Type",
+        "registrationDate": "Registration Date",
+        "actions": "Actions",
+        "submit": "Submit",
+        "statusName": "Status",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        },
+        "types": {
+          "attendee": "Attendee",
+          "media": "Media",
+          "exhibitor": "Exhibitor",
+          "staff": "Staff"
+        },
+        "edit": "Edit",
+        "delete": "Delete",
+        "approve": "Approve",
+        "reject": "Reject",
+        "filterByType": "Filter by Type",
+        "search": "Search",
+        "all": "All"
+      },
+      "Guests": {
+        "title": "Guest List",
+        "addGuest": "Add Guest",
+        "editGuest": "Edit Guest",
+        "deleteGuest": "Delete Guest",
+        "reviewGuest": "Review Guest",
+        "name": "Name",
+        "company": "Company",
+        "position": "Position",
+        "photo": "Photo",
+        "description": "Description",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "Schedule": {
+        "title": "Schedule",
+        "addSchedule": "Add Schedule",
+        "editSchedule": "Edit Schedule",
+        "deleteSchedule": "Delete Schedule",
+        "reviewSchedule": "Review Schedule",
+        "name": "Name",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "description": "Description",
+        "guests": "Guests",
+        "selectGuests": "Select Guests",
+        "submit": "Submit",
+        "actions": "Actions",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "Exhibitors": {
+        "title": "Exhibitor List",
+        "addExhibitor": "Add Exhibitor",
+        "editExhibitor": "Edit Exhibitor",
+        "deleteExhibitor": "Delete Exhibitor",
+        "reviewExhibitor": "Review Exhibitor",
+        "name": "Name",
+        "logo": "Logo",
+        "website": "Website",
+        "description": "Description",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "Materials": {
+        "title": "Materials",
+        "addMaterial": "Add Material",
+        "editMaterial": "Edit Material",
+        "deleteMaterial": "Delete Material",
+        "reviewMaterial": "Review Material",
+        "name": "Name",
+        "file": "File",
+        "uploadFile": "Upload File",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "fileUrl": "File URL",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "News": {
+        "title": "News",
+        "addNews": "Add News",
+        "editNews": "Edit News",
+        "deleteNews": "Delete News",
+        "reviewNews": "Review News",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "content": "Content",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "Videos": {
+        "title": "Videos",
+        "addVideo": "Add Video",
+        "editVideo": "Edit Video",
+        "deleteVideo": "Delete Video",
+        "reviewVideo": "Review Video",
+        "name": "Name",
+        "videoUrl": "Video URL",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "Photos": {
+        "title": "Photos",
+        "addPhoto": "Add Photo",
+        "editPhoto": "Edit Photo",
+        "deletePhoto": "Delete Photo",
+        "reviewPhoto": "Review Photo",
+        "upload": "Upload Photo",
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "Livestream": {
+        "title": "Livestream",
+        "streamUrl": "Stream URL (m3u8)",
+        "status": {
+          "live": "Live",
+          "notStarted": "Not Started",
+          "ended": "Ended",
+          "replay": "Replay",
+          "noStream": "No Stream"
+        },
+        "updateLivestream": "Update Livestream",
+        "createLivestream": "Create Livestream",
+        "updateStatus": "Update Status",
+        "save": "Save Changes"
+      }
     },
     "websiteManagement": {
       "title": "Website Management"

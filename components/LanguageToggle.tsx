@@ -15,8 +15,13 @@ export function LanguageToggle() {
   };
 
   return (
-    <Button onClick={toggleLanguage} variant="outline" size="sm">
-      {locale === "zh" ? "English" : "中文"}
+    <Button
+      onClick={toggleLanguage}
+      variant="outline"
+      size="sm"
+      className="w-8 h-8"
+    >
+      {locale === "zh" ? "En" : "中"}
     </Button>
   );
 }

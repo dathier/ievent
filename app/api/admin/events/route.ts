@@ -1,20 +1,47 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request) {
-  // 在实际应用中，您需要从数据库获取事件列表
-  const events = [
-    { id: 1, title: "Tech Conference 2023", date: "2023-09-15", status: "approved" },
-    { id: 2, title: "Music Festival", date: "2023-10-01", status: "pending" },
-    // 添加更多事件...
-  ];
-
-  return NextResponse.json(events);
+export async function GET() {
+  try {
+    const events = await prisma.event.findMany();
+    return NextResponse.json(events);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
-  const data = await request.json();
-  // 在实际应用中，您需要将新事件保存到数据库
-  console.log("Received new event:", data);
-  return NextResponse.json({ message: "Event created successfully", id: Date.now() });
+  try {
+    const data = await request.json();
+    console.log("Received data:", data);
+    const newEvent = await prisma.event.create({
+      data: {
+        title: data.title,
+        imageUrl: data.imageUrl,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
+        location: data.location,
+        isPaid: data.isPaid,
+        ticketPrice: data.isPaid ? Number(data.ticketPrice) : null,
+        eventType: data.eventType,
+        industryType: data.industryType,
+        businessType: data.businessType,
+        description: data.description,
+        requiresRegistration: data.requiresRegistration,
+        isPublished: data.isPublished,
+        isFeatured: data.isFeatured,
+      },
+    });
+    return NextResponse.json(newEvent);
+  } catch (error) {
+    console.error("Error creating event:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
-

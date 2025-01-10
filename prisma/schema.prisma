@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Venue {
+  id        Int      @id @default(autoincrement())
+  name      String
+  location  String
+  capacity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Website {
+  id           Int      @id @default(autoincrement())
+  heroTitle    String
+  heroSubtitle String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Event {
+  id                   Int            @id @default(autoincrement())
+  title                String
+  imageUrl             String?
+  startDate            DateTime
+  endDate              DateTime
+  location             String
+  isPaid               Boolean
+  ticketPrice          Float?
+  eventType            String
+  industryType         String
+  businessType         String
+  description          String         @db.Text
+  requiresRegistration Boolean
+  isPublished          Boolean        @default(false)
+  isFeatured           Boolean        @default(false)
+  status               String         @default("pending") // Added status field
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  registrations        Registration[]
+  guests               Guest[]
+  schedules            Schedule[]
+  exhibitors           Exhibitor[]
+  materials            Material[]
+  news                 News[]
+  videos               Video[]
+  photos               Photo[]
+  livestream           Livestream?
+}
+
+model Registration {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  name      String
+  phone     String
+  email     String
+  company   String
+  type      String
+  status    String   @default("pending") // Added status field
+  createdAt DateTime @default(now())
+}
+
+model Guest {
+  id          Int        @id @default(autoincrement())
+  eventId     Int
+  event       Event      @relation(fields: [eventId], references: [id])
+  name        String
+  company     String
+  photo       String?
+  position    String
+  description String     @db.Text
+  status      String     @default("pending") // Added status field
+  schedules   Schedule[]
+}
+
+model Schedule {
+  id          Int      @id @default(autoincrement())
+  eventId     Int
+  event       Event    @relation(fields: [eventId], references: [id])
+  name        String
+  startTime   DateTime
+  endTime     DateTime
+  description String   @db.Text
+  status      String   @default("pending") // Added status field
+  guests      Guest[]
+}
+
+model Exhibitor {
+  id          Int     @id @default(autoincrement())
+  eventId     Int
+  event       Event   @relation(fields: [eventId], references: [id])
+  name        String
+  logo        String?
+  website     String?
+  description String  @db.Text
+  status      String  @default("pending") // Added status field
+}
+
+model Material {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  name      String
+  fileUrl   String
+  status    String   @default("pending") // Added status field
+  createdAt DateTime @default(now())
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  title     String
+  content   String   @db.Text
+  status    String   @default("pending") // Added status field
+  createdAt DateTime @default(now())
+}
+
+model Video {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  name      String
+  videoUrl  String
+  status    String   @default("pending") // Added status field
+  createdAt DateTime @default(now())
+}
+
+model Photo {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  photoUrl  String
+  status    String   @default("pending") // Added status field
+  createdAt DateTime @default(now())
+}
+
+model Livestream {
+  id        Int    @id @default(autoincrement())
+  eventId   Int    @unique
+  event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  streamUrl String
+  status    String
+}

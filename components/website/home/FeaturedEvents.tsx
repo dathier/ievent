@@ -1,63 +1,74 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import axios from "axios";
+import { format } from "date-fns";
+
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+
+interface Event {
+  id: number;
+  title: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  description: string;
+  status: string;
+  isPublished: boolean;
+}
 
 export function FeaturedEvents() {
-  const t = useTranslations("Frontend.featuredEvents");
-  const [events, setEvents] = useState([]);
-
-  const fetchEvents = useCallback(async () => {
-    try {
-      const response = await fetch("/api/events?approved=true");
-      if (!response.ok) {
-        throw new Error("Failed to fetch events");
-      }
-      const data = await response.json();
-      setEvents(data.slice(0, 3)); // Get only the first 3 events
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      toast({
-        title: t("fetchError"),
-        description: t("fetchErrorDescription"),
-        variant: "destructive",
-      });
-    }
-  }, [t]);
+  const t = useTranslations("Home");
+  const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    fetchEvents();
-  }, [fetchEvents]);
+    fetchFeaturedEvents();
+  }, []);
+
+  async function fetchFeaturedEvents() {
+    try {
+      const response = await axios.get("/api/events/featured");
+      const events = response.data;
+      const approvedAndPublishedEvents = events.filter(
+        (event: Event) => event.status === "approved" && event.isPublished
+      );
+      setFeaturedEvents(approvedAndPublishedEvents);
+    } catch (error) {
+      console.error("Error fetching featured events:", error);
+    }
+  }
 
   return (
     <section className="py-12 bg-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-6">
-          {t("title")}
-        </h2>
+      <div className="container mx-auto">
+        <h2 className="text-3xl font-bold mb-6">{t("featuredEvents")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {featuredEvents.map((event) => (
             <Card key={event.id}>
               <CardHeader>
                 <CardTitle>{event.title}</CardTitle>
+                <CardDescription>
+                  {format(new Date(event.startDate), "PP")} -{" "}
+                  {format(new Date(event.endDate), "PP")}
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <p>{new Date(event.date).toLocaleDateString()}</p>
                 <p>{event.location}</p>
+                <p className="mt-2">{event.description}</p>
               </CardContent>
               <CardFooter>
-                <Link href={`/events/${event.id}`} passHref>
-                  <Button variant="outline">{t("learnMore")}</Button>
+                <Link href={`/website/events/${event.id}`}>
+                  <Button>{t("learnMore")}</Button>
                 </Link>
               </CardFooter>
             </Card>
