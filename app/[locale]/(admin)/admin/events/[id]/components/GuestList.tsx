@@ -34,13 +34,14 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { FileUpload } from "@/components/FileUpload";
+import { FileUploader } from "@/components/FileUpload";
+import { useUploadThing } from "@/lib/uploadthing";
 
 interface Guest {
   id: number;
   name: string;
   company: string;
-  photo: string;
+  imageUrl: string;
   position: string;
   description: string;
 }
@@ -48,7 +49,7 @@ interface Guest {
 const guestSchema = z.object({
   name: z.string().min(1, "Name is required"),
   company: z.string().min(1, "Company is required"),
-  photo: z.string().url("Must be a valid URL").optional(),
+  imageUrl: z.string().url("Must be a valid URL").optional(),
   position: z.string().min(1, "Position is required"),
   description: z.string().min(1, "Description is required"),
 });
@@ -59,12 +60,15 @@ export function GuestList({ eventId }: { eventId: number }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
 
+  const [files, setFiles] = useState<File[]>([]);
+  const { startUpload } = useUploadThing("imageUploader");
+
   const form = useForm<z.infer<typeof guestSchema>>({
     resolver: zodResolver(guestSchema),
     defaultValues: {
       name: "",
       company: "",
-      photo: "",
+      imageUrl: "",
       position: "",
       description: "",
     },
@@ -89,6 +93,19 @@ export function GuestList({ eventId }: { eventId: number }) {
   }
 
   async function onSubmit(data: z.infer<typeof guestSchema>) {
+    let uploadedImageUrl = data.imageUrl;
+
+    if (files.length > 0) {
+      const uploadedImages = await startUpload(files);
+
+      if (!uploadedImages) {
+        return;
+      }
+
+      uploadedImageUrl = uploadedImages[0].url;
+    }
+    data = { ...data, imageUrl: uploadedImageUrl };
+
     try {
       if (editingGuest) {
         await axios.put(
@@ -191,15 +208,15 @@ export function GuestList({ eventId }: { eventId: number }) {
               />
               <FormField
                 control={form.control}
-                name="photo"
+                name="imageUrl"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("photo")}</FormLabel>
                     <FormControl>
-                      <FileUpload
-                        onUploadComplete={(url) => field.onChange(url)}
-                        currentImage={field.value}
-                        onDelete={() => field.onChange("")}
+                      <FileUploader
+                        onFieldChange={field.onChange}
+                        imageUrl={field.value}
+                        setFiles={setFiles}
                       />
                     </FormControl>
                     <FormMessage />

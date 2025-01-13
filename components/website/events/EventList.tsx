@@ -1,4 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import QRCodeModal from "@/components/QRCodeModal";
 import {
   Card,
   CardContent,
@@ -8,6 +13,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, MapPin } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface Event {
   id: number;
@@ -33,6 +45,17 @@ export function EventList({ events }: EventListProps) {
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {approvedEvents.map((event) => (
         <Card key={event.id}>
+          {event.imageUrl && (
+            <div className="relative w-full h-48">
+              <Image
+                src={event.imageUrl}
+                alt={event.title}
+                fill
+                className="object-cover rounded-t-lg"
+                priority
+              />
+            </div>
+          )}
           <CardHeader>
             <CardTitle>{event.title}</CardTitle>
           </CardHeader>
@@ -49,9 +72,15 @@ export function EventList({ events }: EventListProps) {
             <p className="line-clamp-3">{event.description}</p>
           </CardContent>
           <CardFooter>
-            <Button asChild className="w-full">
-              <Link href={`/website/events/${event.id}`}>View Details</Link>
-            </Button>
+            <div className="flex gap-8">
+              <Button asChild className="w-full">
+                <Link href={`/website/events/${event.id}`}>活动详情</Link>
+              </Button>
+
+              <QRCodeModal
+                url={`${process.env.NEXT_PUBLIC_BASE_URL}/website/events/${event.id}`}
+              />
+            </div>
           </CardFooter>
         </Card>
       ))}

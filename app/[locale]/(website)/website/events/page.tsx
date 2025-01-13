@@ -103,6 +103,7 @@ export default function EventsPage() {
         </CardContent>
       </Card>
       <EventList events={paginatedEvents} />
+
       <Pagination
         className="justify-center"
         currentPage={currentPage}

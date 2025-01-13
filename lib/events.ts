@@ -39,6 +39,13 @@ export async function getEvent(id: number) {
     where: { id },
     include: {
       guests: true,
+      exhibitors: true,
+      registrations: true,
+      livestream: true,
+      schedules: true,
+      photos: true,
+      videos: true,
+      news: true,
     },
   });
 }

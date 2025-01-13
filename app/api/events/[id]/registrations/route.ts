@@ -7,12 +7,13 @@ export async function GET(
 ) {
   try {
     const eventId = parseInt(params.id);
-    const guests = await prisma.guest.findMany({
+    const registrations = await prisma.registration.findMany({
       where: { eventId },
+      orderBy: { createdAt: "desc" },
     });
-    return NextResponse.json(guests);
+    return NextResponse.json(registrations);
   } catch (error) {
-    console.error("Error fetching guests:", error);
+    console.error("Error fetching registrations:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -27,16 +28,18 @@ export async function POST(
   try {
     const eventId = parseInt(params.id);
     const data = await request.json();
-    const newGuest = await prisma.guest.create({
+
+    const newRegistration = await prisma.registration.create({
       data: {
         ...data,
-
         eventId,
+        status: "pending",
       },
     });
-    return NextResponse.json(newGuest);
+
+    return NextResponse.json(newRegistration);
   } catch (error) {
-    console.error("Error creating guest:", error);
+    console.error("Error creating registration:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

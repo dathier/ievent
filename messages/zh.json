@@ -388,6 +388,7 @@
         "photo": "照片",
         "description": "介绍",
         "actions": "操作",
+        "submit": "提交",
         "edit": "编辑",
         "delete": "删除",
         "status": {
@@ -410,6 +411,10 @@
         "selectGuests": "选择嘉宾",
         "submit": "提交",
         "actions": "操作",
+        "edit": "编辑",
+        "delete": "删除",
+        "scheduleCreationError": "日程创建失败，请稍后再试。",
+        "scheduleDeletionErrorDescription": "日程删除失败，请稍后再试。",
         "status": {
           "pending": "待审核",
           "approved": "已批准",
@@ -428,6 +433,7 @@
         "description": "介绍",
         "actions": "操作",
         "edit": "编辑",
+        "submit": "提交",
         "delete": "删除",
         "status": {
           "pending": "待审核",
@@ -493,7 +499,10 @@
         "editPhoto": "编辑照片",
         "deletePhoto": "删除照片",
         "reviewPhoto": "审核照片",
-        "upload": "上传照片",
+        "uploadPhoto": "上传照片",
+        "photo": "照片",
+        "caption": "标题",
+        "upload": "上传",
         "edit": "编辑",
         "delete": "删除",
         "status": {
@@ -504,18 +513,24 @@
       },
       "Livestream": {
         "title": "直播",
-        "streamUrl": "直播地址 (m3u8)",
-        "status": {
+        "url": "直播地址 (m3u8)",
+        "status": "状态",
+        "statuses": {
           "live": "直播中",
           "notStarted": "未开始",
           "ended": "已结束",
           "replay": "回放中",
-          "noStream": "无直播"
+          "noStream": "无直播",
+          "upcoming": "即将开始",
+          "offline": "已下线"
         },
-        "updateLivestream": "更新直播",
-        "createLivestream": "创建直播",
+        "update": "更新直播",
+        "create": "创建直播",
         "updateStatus": "更新状态",
-        "save": "保存更改"
+        "save": "保存更改",
+        "selectStatus": "选择状态",
+        "updateSuccess": "活动更新成功",
+        "updateSuccessDescription": "您的网站内容已成功更新。"
       }
     },
     "websiteManagement": {

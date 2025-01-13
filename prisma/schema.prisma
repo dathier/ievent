@@ -73,7 +73,7 @@ model Guest {
   event       Event      @relation(fields: [eventId], references: [id])
   name        String
   company     String
-  photo       String?
+  imageUrl    String?
   position    String
   description String     @db.Text
   status      String     @default("pending") // Added status field
@@ -137,7 +137,8 @@ model Photo {
   id        Int      @id @default(autoincrement())
   eventId   Int
   event     Event    @relation(fields: [eventId], references: [id])
-  photoUrl  String
+  imageUrl  String
+  caption   String
   status    String   @default("pending") // Added status field
   createdAt DateTime @default(now())
 }

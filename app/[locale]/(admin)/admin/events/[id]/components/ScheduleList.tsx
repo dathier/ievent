@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import axios from "axios";
-import { format } from "date-fns";
+import * as z from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Table,
@@ -23,6 +25,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 import {
   Select,
   SelectContent,
@@ -30,13 +42,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/hooks/use-toast";
 
 interface Schedule {
   id: number;
   name: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   description: string;
   guests: { id: number; name: string }[];
 }
@@ -46,16 +57,35 @@ interface Guest {
   name: string;
 }
 
+const scheduleSchema = z
+  .object({
+    name: z.string().min(1, "Name is required"),
+    startTime: z.date(),
+    endTime: z.date(),
+    description: z.string().min(1, "Description is required"),
+    guestIds: z.array(z.number()).optional(),
+  })
+  .refine((data) => data.endTime > data.startTime, {
+    message: "End time must be after start time",
+    path: ["endTime"],
+  });
+
 export function ScheduleList({ eventId }: { eventId: number }) {
   const t = useTranslations("Admin.EventManagement.Schedule");
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [guests, setGuests] = useState<Guest[]>([]);
-  const [newSchedule, setNewSchedule] = useState({
-    name: "",
-    startTime: "",
-    endTime: "",
-    description: "",
-    guestIds: [],
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
+
+  const form = useForm<z.infer<typeof scheduleSchema>>({
+    resolver: zodResolver(scheduleSchema),
+    defaultValues: {
+      name: "",
+      startTime: new Date(),
+      endTime: new Date(),
+      description: "",
+      guestIds: [],
+    },
   });
 
   useEffect(() => {
@@ -71,6 +101,11 @@ export function ScheduleList({ eventId }: { eventId: number }) {
       setSchedules(response.data);
     } catch (error) {
       console.error("Error fetching schedules:", error);
+      toast({
+        title: t("fetchError"),
+        description: t("fetchErrorDescription"),
+        variant: "destructive",
+      });
     }
   }
 
@@ -80,30 +115,73 @@ export function ScheduleList({ eventId }: { eventId: number }) {
       setGuests(response.data);
     } catch (error) {
       console.error("Error fetching guests:", error);
+      toast({
+        title: t("fetchGuestsError"),
+        description: t("fetchGuestsErrorDescription"),
+        variant: "destructive",
+      });
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function onSubmit(data: z.infer<typeof scheduleSchema>) {
     try {
-      await axios.post(`/api/admin/events/${eventId}/schedules`, newSchedule);
+      if (editingSchedule) {
+        await axios.put(
+          `/api/admin/events/${eventId}/schedules/${editingSchedule.id}`,
+          data
+        );
+        toast({
+          title: t("updateSuccess"),
+          description: t("updateSuccessDescription"),
+        });
+      } else {
+        await axios.post(`/api/admin/events/${eventId}/schedules`, data);
+        toast({
+          title: t("createSuccess"),
+          description: t("createSuccessDescription"),
+        });
+      }
+      setIsDialogOpen(false);
+      setEditingSchedule(null);
+      form.reset();
+      fetchSchedules();
+    } catch (error) {
+      console.error(
+        `Error ${editingSchedule ? "updating" : "creating"} schedule:`,
+        error
+      );
       toast({
-        title: t("scheduleCreated"),
-        description: t("scheduleCreatedDescription"),
+        title: t("error"),
+        description: t("errorDescription"),
+        variant: "destructive",
+      });
+    }
+  }
+
+  function handleEdit(schedule: Schedule) {
+    setEditingSchedule(schedule);
+    form.reset({
+      ...schedule,
+      startTime: new Date(schedule.startTime),
+      endTime: new Date(schedule.endTime),
+      guestIds: schedule.guests.map((g) => g.id),
+    });
+    setIsDialogOpen(true);
+  }
+
+  async function handleDelete(id: number) {
+    try {
+      await axios.delete(`/api/admin/events/${eventId}/schedules/${id}`);
+      toast({
+        title: t("deleteSuccess"),
+        description: t("deleteSuccessDescription"),
       });
       fetchSchedules();
-      setNewSchedule({
-        name: "",
-        startTime: "",
-        endTime: "",
-        description: "",
-        guestIds: [],
-      });
     } catch (error) {
-      console.error("Error creating schedule:", error);
+      console.error("Error deleting schedule:", error);
       toast({
-        title: t("scheduleCreationError"),
-        description: t("scheduleCreationErrorDescription"),
+        title: t("deleteError"),
+        description: t("deleteErrorDescription"),
         variant: "destructive",
       });
     }
@@ -111,94 +189,145 @@ export function ScheduleList({ eventId }: { eventId: number }) {
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="mb-4">{t("addSchedule")}</Button>
+          <Button className="mb-4">
+            {editingSchedule ? t("editSchedule") : t("addSchedule")}
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("addSchedule")}</DialogTitle>
+            <DialogTitle>
+              {editingSchedule ? t("editSchedule") : t("addSchedule")}
+            </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Input
-              placeholder={t("name")}
-              value={newSchedule.name}
-              onChange={(e) =>
-                setNewSchedule({ ...newSchedule, name: e.target.value })
-              }
-              required
-            />
-            <Input
-              type="datetime-local"
-              placeholder={t("startTime")}
-              value={newSchedule.startTime}
-              onChange={(e) =>
-                setNewSchedule({ ...newSchedule, startTime: e.target.value })
-              }
-              required
-            />
-            <Input
-              type="datetime-local"
-              placeholder={t("endTime")}
-              value={newSchedule.endTime}
-              onChange={(e) =>
-                setNewSchedule({ ...newSchedule, endTime: e.target.value })
-              }
-              required
-            />
-            <Textarea
-              placeholder={t("description")}
-              value={newSchedule.description}
-              onChange={(e) =>
-                setNewSchedule({ ...newSchedule, description: e.target.value })
-              }
-              required
-            />
-            <Select
-              onValueChange={(value) =>
-                setNewSchedule({
-                  ...newSchedule,
-                  guestIds: [...newSchedule.guestIds, parseInt(value)],
-                })
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder={t("selectGuests")} />
-              </SelectTrigger>
-              <SelectContent>
-                {guests.map((guest) => (
-                  <SelectItem key={guest.id} value={guest.id.toString()}>
-                    {guest.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <div>
-              {newSchedule.guestIds.map((guestId) => (
-                <span
-                  key={guestId}
-                  className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-                >
-                  {guests.find((g) => g.id === guestId)?.name}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setNewSchedule({
-                        ...newSchedule,
-                        guestIds: newSchedule.guestIds.filter(
-                          (id) => id !== guestId
-                        ),
-                      })
-                    }
-                    className="ml-2 text-red-500"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("name")}</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="startTime"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("startTime")}</FormLabel>
+                    <FormControl>
+                      <DateTimePicker
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="endTime"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("endTime")}</FormLabel>
+                    <FormControl>
+                      <DateTimePicker
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("description")}</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="guestIds"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("guests")}</FormLabel>
+                    <FormControl>
+                      <Controller
+                        name="guestIds"
+                        control={form.control}
+                        render={({ field }) => (
+                          <Select
+                            onValueChange={(value) => {
+                              const newValue = [
+                                ...field.value,
+                                parseInt(value),
+                              ];
+                              field.onChange(newValue);
+                            }}
+                            value={field.value.join(",")}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={t("selectGuests")} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {guests.map((guest) => (
+                                <SelectItem
+                                  key={guest.id}
+                                  value={guest.id.toString()}
+                                >
+                                  {guest.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div>
+                {form.watch("guestIds").map((guestId) => (
+                  <span
+                    key={guestId}
+                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
                   >
-                    &times;
-                  </button>
-                </span>
-              ))}
-            </div>
-            <Button type="submit">{t("submit")}</Button>
-          </form>
+                    {guests.find((g) => g.id === guestId)?.name}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newGuestIds = form
+                          .getValues("guestIds")
+                          .filter((id) => id !== guestId);
+                        form.setValue("guestIds", newGuestIds);
+                      }}
+                      className="ml-2 text-red-500"
+                    >
+                      &times;
+                    </button>
+                  </span>
+                ))}
+              </div>
+              <Button type="submit">{t("submit")}</Button>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
       <Table>
@@ -216,17 +345,28 @@ export function ScheduleList({ eventId }: { eventId: number }) {
             <TableRow key={schedule.id}>
               <TableCell>{schedule.name}</TableCell>
               <TableCell>
-                {format(new Date(schedule.startTime), "PPp")}
+                {new Date(schedule.startTime).toLocaleString()}
               </TableCell>
-              <TableCell>{format(new Date(schedule.endTime), "PPp")}</TableCell>
+              <TableCell>
+                {new Date(schedule.endTime).toLocaleString()}
+              </TableCell>
               <TableCell>
                 {schedule.guests.map((g) => g.name).join(", ")}
               </TableCell>
               <TableCell>
-                <Button variant="outline" size="sm" className="mr-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mr-2"
+                  onClick={() => handleEdit(schedule)}
+                >
                   {t("edit")}
                 </Button>
-                <Button variant="destructive" size="sm">
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => handleDelete(schedule.id)}
+                >
                   {t("delete")}
                 </Button>
               </TableCell>
