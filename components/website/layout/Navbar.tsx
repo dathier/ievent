@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { cn } from "@/lib/utils";
+import { log } from "util";
 
 export function Navbar() {
   const t = useTranslations("Frontend.nav");
@@ -49,23 +50,27 @@ export function Navbar() {
     { href: "/website/about", label: t("about") },
   ];
 
+  const isHomePage = pathname.length === 11;
+  //console.log("isHomePage", isHomePage);
+
   const navbarClasses = cn(
     "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
     {
-      "bg-transparent": !isScrolled,
+      "bg-transparent": !isScrolled && isHomePage,
       "bg-white shadow-md": isScrolled && !isDarkBackground,
-      "bg-gray-900/80 shadow-md": isScrolled && isDarkBackground,
+      "bg-gray-900/80 shadow-md":
+        (isScrolled && isDarkBackground) || !isHomePage,
     }
   );
 
   const linkClasses = cn("transition-colors hover:text-gray-300", {
     "text-white": isDarkBackground,
-    "text-gray-900": !isDarkBackground,
+    "text-gray-100": !isDarkBackground && isHomePage,
   });
 
   const buttonClasses = cn("transition-colors", {
-    "text-white hover:text-gray-300": isDarkBackground,
-    "text-gray-900 hover:text-gray-700": !isDarkBackground,
+    "text-white hover:text-gray-700": isDarkBackground || isHomePage,
+    "text-gray-900 hover:text-gray-300": !isDarkBackground,
   });
 
   return (

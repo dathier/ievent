@@ -1,9 +1,11 @@
-import { VenueCard } from "./VenueCard"
+import { VenueCard } from "./VenueCard";
 
 interface Venue {
   id: number;
   name: string;
   location: string;
+  category: string;
+  image: string;
 }
 
 interface VenueListProps {
@@ -17,6 +19,5 @@ export function VenueList({ venues }: VenueListProps) {
         <VenueCard key={venue.id} venue={venue} />
       ))}
     </div>
-  )
+  );
 }
-

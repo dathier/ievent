@@ -112,32 +112,71 @@
     "locationSuburban": "郊区",
     "locationResort": "度假区"
   },
-  "Pricing": {
-    "title": "价格",
-    "freePlan": "免费计划",
-    "freePrice": "每月0元",
-    "freeFeature1": "基本功能",
-    "freeFeature2": "有限使用",
-    "freeCtaText": "开始使用",
-    "proPlan": "专业计划",
-    "proPrice": "每月99元",
-    "proFeature1": "高级功能",
-    "proFeature2": "无限制使用",
-    "proCtaText": "升级到专业版",
-    "enterprisePlan": "企业计划",
-    "enterprisePrice": "定制",
-    "enterpriseFeature1": "定制功能",
-    "enterpriseFeature2": "专属支持",
-    "enterpriseCtaText": "联系销售"
-  },
+
   "About": {
     "title": "关于我们",
+    "subtitle": "我们致力于为您提供最佳的活动管理解决方案",
     "missionTitle": "我们的使命",
-    "missionContent": "iEvents致力于革新活动管理行业...",
+    "missionContent": "我们的使命是简化活动管理流程，让组织者能够专注于创造精彩的活动体验。",
     "teamTitle": "我们的团队",
-    "teamContent": "我们是一群热衷于活动的多元化专业人士...",
+    "teamContent": "我们的团队由经验丰富的专业人士组成，他们热衷于创新和卓越服务。",
+    "teamMember1Name": "Jack",
+    "teamMember1Position": "首席执行官",
+    "teamMember2Name": "Michael",
+    "teamMember2Position": "技术总监",
+    "teamMember3Name": "Candy",
+    "teamMember3Position": "客户经理",
     "contactTitle": "联系我们",
-    "contactContent": "通过contact@ievents.com与我们联系，或拨打 +1 (123) 456-7890。"
+    "contactContent": "我们随时欢迎您的反馈和询问。请随时与我们联系，我们将竭诚为您服务。",
+    "contactButton": "联系我们"
+  },
+  "Pricing": {
+    "title": "定价方案",
+    "subtitle": "选择最适合您需求的方案",
+
+    "free": {
+      "title": "免费版",
+      "price": "¥0",
+      "features": {
+        "basic": "基本活动创建",
+        "attendees": "最多50名参与者",
+        "support": "电子邮件支持"
+      },
+      "ctaText": "立即开始"
+    },
+    "pro": {
+      "title": "专业版",
+      "price": "¥99/月",
+      "features": {
+        "advanced": "高级活动管理",
+        "attendees": "最多500名参与者",
+        "support": "优先支持",
+        "branding": "自定义品牌"
+      },
+      "ctaText": "升级到专业版"
+    },
+    "enterprise": {
+      "title": "企业版",
+      "price": "联系我们",
+      "features": {
+        "unlimited": "无限活动",
+        "attendees": "无限参与者",
+        "support": "24/7专属支持",
+        "api": "API访问",
+        "integrations": "自定义集成"
+      },
+      "ctaText": "联系销售"
+    },
+    "registerTitle": "注册",
+    "registerDescription": "请填写以下信息以完成注册",
+    "email": "电子邮箱",
+    "password": "密码",
+    "register": "注册",
+    "registering": "注册中...",
+    "registrationSuccess": "注册成功",
+    "registrationSuccessDescription": "您的账户已成功创建，我们将尽快审核您的申请。",
+    "registrationError": "注册失败",
+    "registrationErrorDescription": "抱歉，注册过程中出现错误。请稍后再试。"
   },
   "User": {
     "dashboard": {
@@ -172,9 +211,12 @@
     "Website": {
       "title": "网站管理",
       "heroSection": "轻松管理您的网站内容",
-      "heroTitle": "网站管理",
-      "heroDescription": "轻松更新您的网站内容，包括文本、图片和视频。",
+      "heroTitle": "网站标题",
+      "heroSubtitle": "网站子标题",
+      "heroDescription": "网站介绍",
+      "heroBackgroundImage": "网站背景图片",
       "saveChanges": "保存更改",
+      "saving": "正在保存...",
       "updateError": "网站内容更新失败",
       "updateErrorDescription": "更新网站内容时出现错误，请稍后再试。",
       "updateSuccess": "网站内容更新成功",
@@ -533,14 +575,35 @@
         "updateSuccessDescription": "您的网站内容已成功更新。"
       }
     },
-    "websiteManagement": {
-      "title": "网站管理"
-    },
-    "eventManagement": {
-      "title": "活动管理"
-    },
-    "venueManagement": {
-      "title": "场地管理"
+
+    "Venues": {
+      "title": "场地管理",
+      "venueName": "场地名称",
+      "venueLocation": "场地地点",
+      "venueCategory": "场地类别",
+      "venueCapacity": "场地容量",
+      "venueImage": "场地图片",
+      "createVenue": "创建场地",
+      "creating": "创建中...",
+      "selectCategory": "选择类别",
+      "searchVenues": "搜索场地",
+      "filterByCategory": "按类别筛选",
+      "actions": "操作",
+      "edit": "编辑",
+      "delete": "删除",
+      "selectCountry": "选择国家",
+      "selectRegion": "选择地区",
+      "selectCity": "选择城市",
+      "categoryConference": "会议",
+      "categoryExhibition": "展览",
+      "categoryBanquet": "宴会",
+      "allCategories": "所有类别",
+      "fetchError": "获取场地失败",
+      "fetchErrorDescription": "获取场地列表时出现错误，请稍后重试。",
+      "createSuccess": "创建成功",
+      "createSuccessDescription": "场地已成功创建。",
+      "createError": "创建失败",
+      "createErrorDescription": "创建场地时出现错误，请稍后重试。"
     }
   }
 }

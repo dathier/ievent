@@ -20,12 +20,16 @@ export async function POST(request: Request) {
     const updatedContent = await prisma.website.upsert({
       where: { id: 1 }, // Assuming there's only one record for website content
       update: {
-        heroTitle: data.hero.title,
-        heroSubtitle: data.hero.description,
+        heroTitle: data.heroTitle,
+        heroSubtitle: data.heroSubtitle,
+        heroDescription: data.heroDescription,
+        heroBackgroundImage: data.imageUrl,
       },
       create: {
-        heroTitle: data.hero.title,
-        heroSubtitle: data.hero.description,
+        heroTitle: data.heroTitle,
+        heroSubtitle: data.heroSubtitle,
+        heroDescription: data.heroDescription,
+        heroBackgroundImage: data.imageUrl,
       },
     });
     return NextResponse.json(updatedContent);

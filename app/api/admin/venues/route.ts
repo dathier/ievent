@@ -1,5 +1,15 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+
+import { z } from "zod";
+
+const venueSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  location: z.string().min(1, "Location is required"),
+  category: z.string().min(1, "Category is required"),
+  capacity: z.number().min(1, "Capacity must be at least 1"),
+  image: z.string().url("Invalid image URL"),
+});
 
 export async function GET() {
   try {
@@ -8,7 +18,7 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching venues:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
@@ -16,19 +26,21 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
+    const body = await request.json();
+    const validatedData = venueSchema.parse(body);
+
     const newVenue = await prisma.venue.create({
-      data: {
-        name: data.name,
-        location: data.location,
-        capacity: data.capacity,
-      },
+      data: validatedData,
     });
-    return NextResponse.json(newVenue);
+
+    return NextResponse.json(newVenue, { status: 201 });
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
     console.error("Error creating venue:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

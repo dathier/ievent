@@ -1,40 +1,49 @@
 import { PricingPlan } from "@/components/website/pricing/PricingPlan";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 export const metadata = {
-  title: 'Pricing | iEvents',
-  description: 'Explore our pricing plans and choose the best option for your needs',
-}
+  title: "Pricing | iEvents",
+  description:
+    "Explore our pricing plans and choose the best option for your needs",
+};
 
 export default function PricingPage() {
+  const t = useTranslations("Pricing");
+
+  const plans = [
+    { key: "free", features: ["basic", "attendees", "support"] },
+    { key: "pro", features: ["advanced", "attendees", "support", "branding"] },
+    {
+      key: "enterprise",
+      features: ["unlimited", "attendees", "support", "api", "integrations"],
+    },
+  ];
+
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
-      <Card>
+    <div className="container mx-auto px-4 py-12 space-y-12 mt-16">
+      <Card className="bg-gradient-to-r from-blue-500 to-teal-400 text-white">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center">Our Pricing Plans</CardTitle>
+          <CardTitle className="text-4xl font-bold text-center">
+            {t("title")}
+          </CardTitle>
         </CardHeader>
+        <CardContent>
+          <p className="text-xl text-center max-w-2xl mx-auto">
+            {t("subtitle")}
+          </p>
+        </CardContent>
       </Card>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <PricingPlan
-          title="Free Plan"
-          price="$0"
-          features={["Basic event creation", "Up to 50 attendees", "Email support"]}
-          ctaText="Get Started"
-        />
-        <PricingPlan
-          title="Pro Plan"
-          price="$99"
-          features={["Advanced event management", "Up to 500 attendees", "Priority support", "Custom branding"]}
-          ctaText="Upgrade to Pro"
-        />
-        <PricingPlan
-          title="Enterprise Plan"
-          price="Custom"
-          features={["Unlimited events", "Unlimited attendees", "24/7 dedicated support", "API access", "Custom integrations"]}
-          ctaText="Contact Sales"
-        />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {plans.map((plan) => (
+          <PricingPlan
+            key={plan.key}
+            planKey={plan.key}
+            features={plan.features}
+          />
+        ))}
       </div>
     </div>
   );
 }
-

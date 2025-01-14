@@ -11,17 +11,21 @@ model Venue {
   id        Int      @id @default(autoincrement())
   name      String
   location  String
+  category  String
   capacity  Int
+  image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Website {
-  id           Int      @id @default(autoincrement())
-  heroTitle    String
-  heroSubtitle String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                  Int      @id @default(autoincrement())
+  heroTitle           String
+  heroSubtitle        String
+  heroDescription     String
+  heroBackgroundImage String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model Event {
@@ -149,4 +153,14 @@ model Livestream {
   event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
   streamUrl String
   status    String
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  plan      String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

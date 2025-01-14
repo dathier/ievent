@@ -19,7 +19,7 @@ export function Footer() {
           </div>
           <div className="grid grid-cols-2 gap-8 lg:col-span-2">
             <div>
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-sm font-semibold text-gray-200">
                 {t("solutions")}
               </h3>
               <ul className="mt-4 space-y-2">
@@ -36,7 +36,7 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-sm font-semibold text-gray-200">
                 {t("support")}
               </h3>
               <ul className="mt-4 space-y-2">
