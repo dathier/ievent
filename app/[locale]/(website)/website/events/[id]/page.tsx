@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
+
 import { EventDetails } from "../components/EventDetails";
 import { EventDetailsSkeleton } from "../components/EventDetailsSkeleton";
 import { getEvent } from "@/lib/events";

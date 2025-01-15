@@ -31,10 +31,10 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(
-      { message: "User registered successfully" },
-      { status: 201 }
-    );
+    return NextResponse.json({
+      newUser,
+      message: "User registered successfully",
+    });
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(

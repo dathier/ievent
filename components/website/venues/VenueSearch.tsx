@@ -37,12 +37,11 @@ export function VenueSearch({
         placeholder={t("filterCategory")}
       />
 
-      {/* <LocationSelector onLocationChange={onFilterLocation} /> */}
-      {/* <FilterSelect
+      <FilterSelect
         options={locationOptions}
         onFilter={onFilterLocation}
         placeholder={t("filterLocation")}
-      /> */}
+      />
     </div>
   );
 }

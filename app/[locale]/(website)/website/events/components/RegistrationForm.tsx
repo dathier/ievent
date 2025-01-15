@@ -49,6 +49,8 @@ export function RegistrationForm({ eventId }: { eventId: number }) {
       });
       form.reset();
     } catch (error) {
+      console.log("Error registering for event:", error);
+
       toast({
         title: "Registration Failed",
         description:

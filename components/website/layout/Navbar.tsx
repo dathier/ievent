@@ -8,7 +8,6 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { cn } from "@/lib/utils";
-import { log } from "util";
 
 export function Navbar() {
   const t = useTranslations("Frontend.nav");

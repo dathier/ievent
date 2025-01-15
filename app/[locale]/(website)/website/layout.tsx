@@ -2,10 +2,7 @@
 
 import { Navbar } from "@/components/website/layout/Navbar";
 import { Footer } from "@/components/website/layout/Footer";
-import { ThemeProvider } from "@/components/theme-provider";
-import { use } from "react";
 import { usePathname } from "next/navigation";
-import { log } from "node:console";
 
 export default function WebsiteLayout({
   children,

@@ -51,6 +51,7 @@ export function RegistrationModal({
         throw new Error("Registration failed");
       }
     } catch (error) {
+      console.error("Error registering user:", error);
       toast({
         title: t("registrationError"),
         description: t("registrationErrorDescription"),

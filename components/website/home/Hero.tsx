@@ -8,12 +8,12 @@ import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import Image from "next/image";
 
-interface heroContent {
+type heroContent = {
   heroTitle: string;
   heroSubtitle: string;
   heroDescription: string;
   heroBackgroundImage: string;
-}
+};
 
 export function Hero() {
   const t = useTranslations("Frontend.hero");

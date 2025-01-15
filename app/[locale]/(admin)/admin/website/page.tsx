@@ -21,7 +21,6 @@ import {
 import { FileUploader } from "@/components/FileUpload";
 
 import { useUploadThing } from "@/lib/uploadthing";
-import { set } from "date-fns";
 
 const websiteContentSchema = z.object({
   heroTitle: z.string().min(1, "Title is required"),
@@ -62,6 +61,7 @@ export default function WebsiteManagement() {
     try {
       const response = await axios.get("/api/admin/website");
       setWebsiteContent(response.data);
+      form.reset(response.data);
     } catch (error) {
       console.error("Error fetching website content:", error);
       toast({

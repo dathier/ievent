@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -47,9 +46,26 @@ const eventSchema = z.object({
 });
 
 interface EditEventFormProps {
-  event: any;
+  event: IEvent;
   onSubmit: (data: z.infer<typeof eventSchema>) => Promise<void>;
 }
+
+type IEvent = {
+  id: number;
+  title: string;
+  imageUrl: string;
+  startDate: Date;
+  endDate: Date;
+  location: string;
+  isPaid: boolean;
+  ticketPrice: number | null;
+  eventType: string;
+  industryType: string;
+  businessType: string;
+  description: string;
+  requiresRegistration: boolean;
+  isPublished: boolean;
+};
 
 export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
   const t = useTranslations("Admin.Events");
