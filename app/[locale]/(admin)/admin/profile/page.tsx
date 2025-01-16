@@ -56,7 +56,7 @@ export default function ProfilePage() {
       await user?.update({
         firstName: data.name.split(" ")[0],
         lastName: data.name.split(" ").slice(1).join(" "),
-        publicMetadata: { company: data.company },
+        unsafeMetadata: { ...user.unsafeMetadata, company: data.company },
       });
       toast({
         title: t("updateSuccess"),
