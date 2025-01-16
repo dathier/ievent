@@ -36,8 +36,7 @@ export async function getEvent(id: number) {
       materials: true,
       schedules: {
         include: {
-          guests:true
-          },
+          guests: true,
         },
       },
     },
