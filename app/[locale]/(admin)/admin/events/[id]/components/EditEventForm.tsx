@@ -65,6 +65,7 @@ type IEvent = {
   description: string;
   requiresRegistration: boolean;
   isPublished: boolean;
+  isFeatured: boolean;
 };
 
 export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
@@ -82,7 +83,7 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
       },
       location: event.location,
       isPaid: event.isPaid,
-      ticketPrice: event.ticketPrice,
+      ticketPrice: event.ticketPrice || 0,
       eventType: event.eventType,
       industryType: event.industryType,
       businessType: event.businessType,
