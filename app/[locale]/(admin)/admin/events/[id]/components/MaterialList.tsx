@@ -54,7 +54,7 @@ export function MaterialList({ eventId }: { eventId: number }) {
   const [editingMaterial, setEditingMaterial] = useState<Material | null>(null);
 
   const [files, setFiles] = useState<File[]>([]);
-  const { startUpload } = useUploadThing("fileUploader");
+  const { startUpload } = useUploadThing("imageUploader");
 
   const form = useForm<z.infer<typeof materialSchema>>({
     resolver: zodResolver(materialSchema),
