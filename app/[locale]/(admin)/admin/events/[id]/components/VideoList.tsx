@@ -54,7 +54,7 @@ export function VideoList({ eventId }: { eventId: number }) {
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
 
   const [files, setFiles] = useState<File[]>([]);
-  const { startUpload } = useUploadThing("videoUploader");
+  const { startUpload } = useUploadThing("imageUploader");
 
   const form = useForm<z.infer<typeof videoSchema>>({
     resolver: zodResolver(videoSchema),
