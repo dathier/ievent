@@ -191,12 +191,12 @@ export async function EventDetails({ eventId }: { eventId: number }) {
               {event.photos.map((photo) => (
                 <div key={photo.id} className="relative aspect-square">
                   <Image
-                    src={photo.imageUrl}
-                    alt={photo.caption || "Event photo"}
+                    src={photo.photoUrl}
+                    alt={photo.status || "Event photo"}
                     fill
                     className="object-cover rounded-lg"
                   />
-                  <p>{photo.caption || "Event photo"}</p>
+                  <p>{photo.status || "Event photo"}</p>
                 </div>
               ))}
             </div>
@@ -250,14 +250,14 @@ export async function EventDetails({ eventId }: { eventId: number }) {
                 <div key={video.id}>
                   <div className="aspect-video">
                     <iframe
-                      src={video.url}
-                      title={video.title}
+                      src={video.videoUrl}
+                      title={video.name}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="w-full h-full rounded-lg"
                     />
                   </div>
-                  <p className="mt-2 font-medium">{video.title}</p>
+                  <p className="mt-2 font-medium">{video.name}</p>
                 </div>
               ))}
             </div>
