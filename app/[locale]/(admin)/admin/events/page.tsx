@@ -207,10 +207,10 @@ export default function EventsListPage() {
                 <Badge
                   variant={
                     event.status === "approved"
-                      ? "success"
+                      ? "default"
                       : event.status === "rejected"
                       ? "destructive"
-                      : "default"
+                      : "secondary"
                   }
                 >
                   {t(`status.${event.status}`)}
