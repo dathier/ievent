@@ -149,7 +149,7 @@ export default function EventsListPage() {
     }
   }
 
-  function formatEventDate(startDate: string, endDate: string) {
+  function formatEventDate(startDate: Date, endDate: Date) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     let dateString = "";
