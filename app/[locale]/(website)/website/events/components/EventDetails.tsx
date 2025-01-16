@@ -191,12 +191,12 @@ export async function EventDetails({ eventId }: { eventId: number }) {
               {event.photos.map((photo) => (
                 <div key={photo.id} className="relative aspect-square">
                   <Image
-                    src={photo.photoUrl}
-                    alt={photo.status || "Event photo"}
+                    src={photo.imageUrl}
+                    alt={photo.caption || "Event photo"}
                     fill
                     className="object-cover rounded-lg"
                   />
-                  <p>{photo.status || "Event photo"}</p>
+                  <p>{photo.caption || "Event photo"}</p>
                 </div>
               ))}
             </div>
