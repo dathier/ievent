@@ -1,51 +1,58 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import createIntlMiddleware from "next-intl/middleware";
+import createMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
+import { AppConfig } from "@/lib/AppConfig";
 
-// 创建 Next-intl 中间件
-const intlMiddleware = createIntlMiddleware({
-  locales: ["en", "zh"],
-  defaultLocale: "en",
+const intlMiddleware = createMiddleware({
+  locales: AppConfig.locales,
+  defaultLocale: AppConfig.defaultLocale,
+  alternateLinks: false,
+  localePrefix: "as-needed",
 });
 
-// 定义公共路由
-const isPublicRoute = createRouteMatcher([
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api/(.*)", // 包括所有 API 路由
-  "/", // 首页
+const isProtectedRoute = createRouteMatcher([
+  "/:locale/(.*)",
+  "/",
+  "/api/:path*",
 ]);
 
-// 组合 Clerk 和 Next-intl 中间件
-const combinedMiddleware = (request) => {
-  const pathname = request.nextUrl.pathname;
+export default clerkMiddleware((auth, req) => {
+  const { pathname } = req.nextUrl;
+
+  if (pathname.includes("/:locale/")) {
+    const locale = pathname.split("/")[1] as (typeof AppConfig.locales)[number];
+    const replacedPathname = pathname.replace("/:locale/", "");
+
+    // Ensure the locale is valid, otherwise use the default locale
+    const validLocale = AppConfig.locales.includes(locale)
+      ? locale
+      : AppConfig.defaultLocale;
+
+    return NextResponse.redirect(
+      new URL(`/${validLocale}/${replacedPathname}`, req.url)
+    );
+  }
 
   // 如果是 API 路由，直接返回
   if (pathname.startsWith("/api/")) {
     return;
   }
 
-  // 对于非 API 路由，应用国际化中间件
-  const intlResponse = intlMiddleware(request);
-  if (intlResponse) return intlResponse;
+  if (isProtectedRoute(req)) {
+    auth.protect();
+  }
 
-  // 最后应用 Clerk 中间件
-  return clerkMiddleware(async (auth) => {
-    if (!isPublicRoute(request)) {
-      await auth.protect();
-    }
-  })(request);
-};
+  return intlMiddleware(req);
+});
 
-export default combinedMiddleware;
-
+// Update the config to exclude static files and include API routes
 export const config = {
-  // matcher: [
-  //   // 跳过 Next.js 内部路由和所有静态文件
-  //   "/((?!_next|static|favicon.ico).*)",
-  //   "/public/(.*)",
-  //   // API 路由
-  //   "/api/(.*)",
-  // ],
-
-  matcher: "/((?!api|static|.*\\..*|_next).*)",
+  matcher: [
+    // Skip Next.js internals and all static files
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/((?!_next|.*\\..*).*)",
+    // Always run for API routes
+    // Include API routes
+    "/(api|trpc)(.*)",
+  ],
 };

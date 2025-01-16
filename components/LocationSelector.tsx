@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import {
   Select,
   SelectContent,
@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import cityData from "@/lib/city.json";
+import cityData from "@/data/city.json";
 import { useTranslations } from "next-intl";
 
 interface LocationSelectorProps {
@@ -14,65 +14,59 @@ interface LocationSelectorProps {
 }
 
 export function LocationSelector({ onLocationChange }: LocationSelectorProps) {
-  const t = useTranslations("Admin.Venues");
-  const [countries, setCountries] = useState<string[]>([]);
-  const [regions, setRegions] = useState<string[]>([]);
-  const [cities, setCities] = useState<string[]>([]);
-
+  const t = useTranslations("Venues");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
-  useEffect(() => {
-    setCountries(cityData.map((country) => country.name));
-  }, []);
+  const countries = useMemo(() => cityData.map((country) => country.name), []);
 
-  useEffect(() => {
+  const regions = useMemo(() => {
     if (selectedCountry) {
       const country = cityData.find((c) => c.name === selectedCountry);
-      if (country) {
-        setRegions(country.regions.map((region) => region.name));
-      }
-    } else {
-      setRegions([]);
+      return country ? country.regions.map((region) => region.name) : [];
     }
-    setSelectedRegion("");
-    setSelectedCity("");
+    return [];
   }, [selectedCountry]);
 
-  useEffect(() => {
+  const cities = useMemo(() => {
     if (selectedCountry && selectedRegion) {
       const country = cityData.find((c) => c.name === selectedCountry);
       if (country) {
         const region = country.regions.find((r) => r.name === selectedRegion);
-        if (region) {
-          setCities(region.cities);
-        }
+        return region ? region.cities : [];
       }
-    } else {
-      setCities([]);
     }
-    setSelectedCity("");
+    return [];
   }, [selectedCountry, selectedRegion]);
 
+  const handleCountryChange = useCallback((value: string) => {
+    setSelectedCountry(value);
+    setSelectedRegion("");
+    setSelectedCity("");
+  }, []);
+
+  const handleRegionChange = useCallback((value: string) => {
+    setSelectedRegion(value);
+    setSelectedCity("");
+  }, []);
+
   useEffect(() => {
+    let location = "";
     if (selectedCity) {
-      onLocationChange(
-        `${selectedCity}, ${selectedRegion}, ${selectedCountry}`
-      );
+      location = `${selectedCity}, ${selectedRegion}, ${selectedCountry}`;
     } else if (selectedRegion) {
-      onLocationChange(`${selectedRegion}, ${selectedCountry}`);
+      location = `${selectedRegion}, ${selectedCountry}`;
     } else if (selectedCountry) {
-      onLocationChange(selectedCountry);
-    } else {
-      onLocationChange("");
+      location = selectedCountry;
     }
+    onLocationChange(location);
   }, [selectedCountry, selectedRegion, selectedCity, onLocationChange]);
 
   return (
-    <div className="flex flex-row items-center justify-center gap-8">
-      <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-        <SelectTrigger>
+    <div className="flex flex-col md:flex-row gap-2">
+      <Select value={selectedCountry} onValueChange={handleCountryChange}>
+        <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={t("selectCountry")} />
         </SelectTrigger>
         <SelectContent>
@@ -84,8 +78,8 @@ export function LocationSelector({ onLocationChange }: LocationSelectorProps) {
         </SelectContent>
       </Select>
 
-      <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-        <SelectTrigger>
+      <Select value={selectedRegion} onValueChange={handleRegionChange}>
+        <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={t("selectRegion")} />
         </SelectTrigger>
         <SelectContent>
@@ -98,7 +92,7 @@ export function LocationSelector({ onLocationChange }: LocationSelectorProps) {
       </Select>
 
       <Select value={selectedCity} onValueChange={setSelectedCity}>
-        <SelectTrigger>
+        <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={t("selectCity")} />
         </SelectTrigger>
         <SelectContent>

@@ -18,6 +18,10 @@ import {
   Users,
   Menu,
   User,
+  Projector,
+  UserCheck,
+  Accessibility,
+  PanelRight,
 } from "lucide-react";
 import { LanguageToggle } from "../LanguageToggle";
 
@@ -33,8 +37,8 @@ export function Sidebar({ className }: SidebarProps) {
     {
       label: t("dashboard"),
       icon: LayoutDashboard,
-      href: "/admin",
-      active: pathname === "/admin",
+      href: "/admin/dashboard",
+      active: pathname === "/admin/dashboard",
     },
     {
       label: t("websiteManagement"),
@@ -68,9 +72,15 @@ export function Sidebar({ className }: SidebarProps) {
     },
     {
       label: t("permissionManagement"),
-      icon: Users,
+      icon: PanelRight,
       href: "/admin/users",
       active: pathname === "/admin/users",
+    },
+    {
+      label: t("profileManagement"),
+      icon: UserCheck,
+      href: "/admin/profile",
+      active: pathname === "/admin/profile",
     },
   ];
 

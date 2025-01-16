@@ -110,7 +110,10 @@
     "categoryBanquet": "宴会",
     "locationDowntown": "市区",
     "locationSuburban": "郊区",
-    "locationResort": "度假区"
+    "locationResort": "度假区",
+    "selectCountry": "选择国家",
+    "selectRegion": "选择地区",
+    "selectCity": "选择城市"
   },
 
   "About": {
@@ -237,6 +240,7 @@
       "interactionManagement": "互动管理",
       "dataStatistics": "数据统计",
       "permissionManagement": "权限管理",
+      "profileManagement": "个人资料",
       "back": "返回仪表盘"
     },
     "Events": {
@@ -603,7 +607,81 @@
       "createSuccess": "创建成功",
       "createSuccessDescription": "场地已成功创建。",
       "createError": "创建失败",
-      "createErrorDescription": "创建场地时出现错误，请稍后重试。"
+      "createErrorDescription": "创建场地时出现错误，请稍后重试。",
+
+      "viewDetails": "查看详情",
+
+      "filterCategory": "按类别筛选",
+      "filterLocation": "按地点筛选"
     }
+  },
+  "Saas": {
+    "dashboard": "仪表板",
+    "events": "活动",
+    "profile": "个人资料",
+    "signIn": "登录",
+    "signUp": "注册",
+
+    "Dashboard": {
+      "welcome": "欢迎，{name}",
+      "totalEvents": "活动总数",
+      "upcomingEvents": "即将到来的活动",
+      "totalAttendees": "参加活动的人数",
+      "createNewEvent": "创建新活动",
+
+      "loading": "加载中...",
+
+      "totalRevenue": "总收入",
+      "eventsByMonth": "每月活动数",
+      "attendeesByType": "参与者类型分布"
+    },
+    "Events": {
+      "editEvent": "编辑活动",
+      "eventsList": "活动列表",
+      "eventTitle": "活动标题",
+      "eventDate": "活动日期",
+      "eventLocation": "活动地点",
+      "status": "状态",
+      "actions": "操作",
+      "createEvent": "创建活动",
+      "updateSuccess": "更新成功",
+      "updateSuccessDescription": "活动已成功更新。",
+      "updateError": "更新失败",
+      "updateErrorDescription": "更新活动时出现错误，请稍后重试。",
+      "updating": "更新中...",
+      "updateEvent": "更新活动",
+      "Manage": {
+        "title": "管理活动：{eventName}",
+        "loading": "加载中...",
+        "tabs": {
+          "details": "活动详情",
+          "exhibitors": "参展商",
+          "guests": "嘉宾",
+          "schedule": "日程安排",
+          "materials": "资料",
+          "news": "新闻",
+          "videos": "视频",
+          "photos": "照片",
+          "livestream": "直播",
+          "registrations": "注册"
+        }
+      }
+    },
+    "Profile": {
+      "title": "个人资料",
+      "fullName": "全名",
+      "email": "电子邮件",
+      "company": "公司",
+      "phone": "电话",
+      "saving": "保存中...",
+      "saveChanges": "保存更改",
+      "updateSuccess": "更新成功",
+      "updateSuccessDescription": "您的个人资料已成功更新。",
+      "updateError": "更新失败",
+      "updateErrorDescription": "更新个人资料时出现错误，请稍后重试。"
+    }
+  },
+  "Auth": {
+    "SignIn": "登录"
   }
 }

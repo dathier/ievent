@@ -56,6 +56,8 @@ model Event {
   videos               Video[]
   photos               Photo[]
   livestream           Livestream?
+  User                 User           @relation(fields: [userId], references: [id])
+  userId               String
 }
 
 model Registration {
@@ -157,10 +159,12 @@ model Livestream {
 
 model User {
   id        String   @id @default(cuid())
+  clerkId   String   @unique
   email     String   @unique
   password  String
   plan      String
   status    String   @default("PENDING")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  events    Event[]
 }

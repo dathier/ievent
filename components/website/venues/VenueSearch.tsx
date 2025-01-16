@@ -1,3 +1,4 @@
+import React, { useCallback } from "react";
 import { SearchInput } from "../shared/SearchInput";
 import { FilterSelect } from "../shared/FilterSelect";
 import { useTranslations } from "next-intl";
@@ -22,11 +23,12 @@ export function VenueSearch({
     { value: "banquet", label: t("categoryBanquet") },
   ];
 
-  const locationOptions = [
-    { value: "downtown", label: t("locationDowntown") },
-    { value: "suburban", label: t("locationSuburban") },
-    { value: "resort", label: t("locationResort") },
-  ];
+  const handleLocationChange = useCallback(
+    (location: string) => {
+      onFilterLocation(location);
+    },
+    [onFilterLocation]
+  );
 
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -36,12 +38,7 @@ export function VenueSearch({
         onFilter={onFilterCategory}
         placeholder={t("filterCategory")}
       />
-
-      <FilterSelect
-        options={locationOptions}
-        onFilter={onFilterLocation}
-        placeholder={t("filterLocation")}
-      />
+      <LocationSelector onLocationChange={handleLocationChange} />
     </div>
   );
 }

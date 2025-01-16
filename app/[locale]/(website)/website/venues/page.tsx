@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { VenueSearch } from "@/components/website/venues/VenueSearch";
 import { VenueList } from "@/components/website/venues/VenueList";
@@ -42,34 +42,45 @@ export default function VenuesPage() {
     }
   };
 
-  const handleSearch = (query: string) => {
-    const filtered = venues.filter(
-      (venue) =>
-        venue.name.toLowerCase().includes(query.toLowerCase()) ||
-        venue.location.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredVenues(filtered);
-    setCurrentPage(1);
-    setTotalPages(Math.ceil(filtered.length / venuesPerPage));
-  };
+  const handleSearch = useCallback(
+    (query: string) => {
+      const filtered = venues.filter(
+        (venue) =>
+          venue.name.toLowerCase().includes(query.toLowerCase()) ||
+          venue.location.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredVenues(filtered);
+      setCurrentPage(1);
+      setTotalPages(Math.ceil(filtered.length / venuesPerPage));
+    },
+    [venues]
+  );
 
-  const handleFilterCategory = (category: string) => {
-    const filtered = venues.filter((venue) => venue.category === category);
-    setFilteredVenues(filtered);
-    setCurrentPage(1);
-    setTotalPages(Math.ceil(filtered.length / venuesPerPage));
-  };
+  const handleFilterCategory = useCallback(
+    (category: string) => {
+      const filtered = venues.filter((venue) => venue.category === category);
+      setFilteredVenues(filtered);
+      setCurrentPage(1);
+      setTotalPages(Math.ceil(filtered.length / venuesPerPage));
+    },
+    [venues]
+  );
 
-  const handleFilterLocation = (location: string) => {
-    const filtered = venues.filter((venue) => venue.location === location);
-    setFilteredVenues(filtered);
-    setCurrentPage(1);
-    setTotalPages(Math.ceil(filtered.length / venuesPerPage));
-  };
+  const handleFilterLocation = useCallback(
+    (location: string) => {
+      const filtered = venues.filter((venue) =>
+        venue.location.toLowerCase().includes(location.toLowerCase())
+      );
+      setFilteredVenues(filtered);
+      setCurrentPage(1);
+      setTotalPages(Math.ceil(filtered.length / venuesPerPage));
+    },
+    [venues]
+  );
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
-  };
+  }, []);
 
   const paginatedVenues = filteredVenues.slice(
     (currentPage - 1) * venuesPerPage,
