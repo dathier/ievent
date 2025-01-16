@@ -36,6 +36,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const eventSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
   startDate: z.date(),
   endDate: z.date(),
   location: z.string().min(1, "Location is required"),
@@ -44,7 +45,6 @@ const eventSchema = z.object({
   eventType: z.string().min(1, "Event type is required"),
   industryType: z.string().min(1, "Industry type is required"),
   businessType: z.string().min(1, "Business type is required"),
-  description: z.string().min(1, "Description is required"),
   requiresRegistration: z.boolean(),
   isPublished: z.boolean(),
   isFeatured: z.boolean(),

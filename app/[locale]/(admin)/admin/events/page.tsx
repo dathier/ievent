@@ -31,8 +31,8 @@ import { EditEventSheet } from "@/components/admin/EditEventSheet";
 interface Event {
   id: number;
   title: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   location: string;
   isPaid: boolean;
   isPublished: boolean;
@@ -40,6 +40,10 @@ interface Event {
   description: string;
   status: string;
   ticketPrice?: number;
+  eventType: string; // 新增字段
+  industryType: string; // 新增字段
+  businessType: string; // 新增字段
+  requiresRegistration: boolean; // 新增字段
 }
 
 export default function EventsListPage() {
