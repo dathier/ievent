@@ -33,6 +33,7 @@ export async function getEvent(id: number) {
       photos: true,
       videos: true,
       news: true,
+      materials: true,
     },
   });
 }
