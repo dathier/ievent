@@ -275,12 +275,12 @@ export function ScheduleList({ eventId }: { eventId: number }) {
                           <Select
                             onValueChange={(value) => {
                               const newValue = [
-                                ...field.value,
+                                ...(field.value || []),
                                 parseInt(value),
                               ];
                               field.onChange(newValue);
                             }}
-                            value={field.value.join(",")}
+                            value={(field.value || []).join(",")}
                           >
                             <SelectTrigger>
                               <SelectValue placeholder={t("selectGuests")} />
@@ -304,7 +304,7 @@ export function ScheduleList({ eventId }: { eventId: number }) {
                 )}
               />
               <div>
-                {form.watch("guestIds").map((guestId) => (
+                {(form.watch("guestIds") || []).map((guestId) => (
                   <span
                     key={guestId}
                     className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
@@ -313,9 +313,9 @@ export function ScheduleList({ eventId }: { eventId: number }) {
                     <button
                       type="button"
                       onClick={() => {
-                        const newGuestIds = form
-                          .getValues("guestIds")
-                          .filter((id) => id !== guestId);
+                        const newGuestIds =
+                          form.getValues("guestIds") ||
+                          [].filter((id) => id !== guestId);
                         form.setValue("guestIds", newGuestIds);
                       }}
                       className="ml-2 text-red-500"
