@@ -12,7 +12,7 @@ import { useDropzone } from "@uploadthing/react";
 
 type FileUploaderProps = {
   onFieldChange: (url: string) => void;
-  imageUrl: string;
+  imageUrl?: string;
   setFiles: Dispatch<SetStateAction<File[]>>;
 };
 
