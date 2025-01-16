@@ -34,6 +34,12 @@ export async function getEvent(id: number) {
       videos: true,
       news: true,
       materials: true,
+      schedules: {
+        include: {
+          guests:true
+          },
+        },
+      },
     },
   });
 }
