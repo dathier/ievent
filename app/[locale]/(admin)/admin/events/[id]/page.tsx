@@ -16,10 +16,14 @@ import { VideoList } from "./components/VideoList";
 import { PhotoList } from "./components/PhotoList";
 import { Livestream } from "./components/Livestream";
 
+interface IEvent {
+  id: number;
+  title: string;
+}
 export default function EventManagementPage() {
   const t = useTranslations("Admin.EventManagement");
   const params = useParams();
-  const [event, setEvent] = useState(null);
+  const [event, setEvent] = useState<IEvent | null>(null);
 
   useEffect(() => {
     fetchEvent();
