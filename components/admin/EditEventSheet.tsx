@@ -115,7 +115,14 @@ export function EditEventSheet({
                     <FormControl>
                       <DateTimePicker
                         value={field.value}
-                        onChange={(date: Date) => field.onChange(date)}
+                        onChange={(date: Date | null) => {
+                          if (date) {
+                            field.onChange(date);
+                          } else {
+                            // 处理 null 值，例如设置为当前日期或保持不变
+                            field.onChange(new Date()); // 或者 field.onChange(field.value)
+                          }
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -131,7 +138,14 @@ export function EditEventSheet({
                     <FormControl>
                       <DateTimePicker
                         value={field.value}
-                        onChange={(date: Date) => field.onChange(date)}
+                        onChange={(date: Date | null) => {
+                          if (date) {
+                            field.onChange(date);
+                          } else {
+                            // 处理 null 值，例如设置为当前日期或保持不变
+                            field.onChange(new Date()); // 或者 field.onChange(field.value)
+                          }
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
