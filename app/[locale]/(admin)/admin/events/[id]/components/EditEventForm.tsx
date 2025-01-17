@@ -141,7 +141,6 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
                   onChange={(date: Date) => field.onChange(date)}
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -157,7 +156,6 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
                   onChange={(date: Date) => field.onChange(date)}
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
