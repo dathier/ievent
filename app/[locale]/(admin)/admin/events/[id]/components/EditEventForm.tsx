@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import DatePickerWithRange from "@/components/ui/date-range-picker";
+
 import {
   Select,
   SelectContent,
@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 const eventSchema = z.object({
   title: z.string().min(1),
@@ -139,10 +140,7 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
             <FormItem>
               <FormLabel>{t("eventDate")}</FormLabel>
               <FormControl>
-                <DatePickerWithRange
-                  selected={field.value}
-                  onSelect={field.onChange}
-                />
+                <DateTimePicker value={field.value} onChange={field.onChange} />
               </FormControl>
             </FormItem>
           )}
