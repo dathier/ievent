@@ -13,6 +13,7 @@ interface Event {
   startDate: string;
   endDate: string;
   location: string;
+  imageUrl: string;
   description: string;
   status: string;
   isPublished: boolean;
