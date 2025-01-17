@@ -30,10 +30,8 @@ import { DateTimePicker } from "@/components/ui/date-time-picker";
 const eventSchema = z.object({
   title: z.string().min(1),
   imageUrl: z.string().url().optional(),
-  dateRange: z.object({
-    from: z.date(),
-    to: z.date(),
-  }),
+  startDate: z.date(),
+  endDate: z.date(),
   location: z.string().min(1),
   isPaid: z.boolean(),
   ticketPrice: z.number().min(0).optional(),
@@ -78,10 +76,8 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
     defaultValues: {
       title: event.title,
       imageUrl: event.imageUrl,
-      dateRange: {
-        from: new Date(event.startDate),
-        to: new Date(event.endDate),
-      },
+      startDate: new Date(event.startDate),
+      endDate: new Date(event.endDate),
       location: event.location,
       isPaid: event.isPaid,
       ticketPrice: event.ticketPrice || 0,
@@ -135,13 +131,33 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
 
         <FormField
           control={form.control}
-          name="dateRange"
+          name="startDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("eventDate")}</FormLabel>
+              <FormLabel>{t("startDate")}</FormLabel>
               <FormControl>
-                <DateTimePicker value={field.value} onChange={field.onChange} />
+                <DateTimePicker
+                  value={field.value}
+                  onChange={(date: Date) => field.onChange(date)}
+                />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="endDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("endDate")}</FormLabel>
+              <FormControl>
+                <DateTimePicker
+                  value={field.value}
+                  onChange={(date: Date) => field.onChange(date)}
+                />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
