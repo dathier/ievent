@@ -59,33 +59,37 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
-  switch (eventType) {
-    case "user.created":
-      await prisma.user.create({
-        data: {
-          clerkId: id as string,
-          email: attributes.email_addresses[0].email_address,
-          role: "user",
-          status: "ACTIVE",
-        },
-      });
-      break;
-    case "user.updated":
-      await prisma.user.update({
-        where: { clerkId: id as string },
-        data: {
-          email: attributes.email_addresses[0].email_address,
-        },
-      });
-      break;
-    case "user.deleted":
-      await prisma.user.delete({
-        where: { clerkId: id as string },
-      });
-      break;
-    default:
-      console.log("Unhandled webhook event type:", evt.type);
-  }
+  // switch (eventType) {
+  //   case "user.created":
+  //     const { id, email_addresses } = evt.data;
+
+  //     await prisma.user.create({
+  //       data: {
+  //         clerkId: id as string,
+  //         email: email_addresses[0].email_address,
+  //         role: "user",
+  //         status: "ACTIVE",
+  //         plan: "FREE",
+  //         password: "",
+  //       },
+  //     });
+  //     break;
+  //   case "user.updated":
+  //     await prisma.user.update({
+  //       where: { clerkId: id as string },
+  //       data: {
+  //         email: email_addresses[0].email_address,
+  //       },
+  //     });
+  //     break;
+  //   case "user.deleted":
+  //     await prisma.user.delete({
+  //       where: { clerkId: id as string },
+  //     });
+  //     break;
+  //   default:
+  //     console.log("Unhandled webhook event type:", evt.type);
+  // }
 
   return new Response("", { status: 200 });
 }
