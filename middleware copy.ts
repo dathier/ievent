@@ -29,11 +29,11 @@ const combinedMiddleware = (request) => {
   if (intlResponse) return intlResponse;
 
   // 最后应用 Clerk 中间件
-  return clerkMiddleware(async (auth, req) => {
-    if (!isPublicRoute(req)) {
-      await auth.protect();
-    }
-  })(request);
+  // return clerkMiddleware(async (auth, req) => {
+  //   if (!isPublicRoute(req)) {
+  //     await auth.protect();
+  //   }
+  // })(request);
 };
 
 export default combinedMiddleware;
