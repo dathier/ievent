@@ -12,15 +12,19 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 
 interface DateTimePickerProps {
-  value: Date;
-  onChange: (date: Date) => void;
+  value: Date | null;
+  onChange: (date: Date | null) => void;
   minDate?: Date;
 }
+
+const defaultProps: Partial<DateTimePickerProps> = {
+  minDate: new Date(),
+};
 
 export function DateTimePicker({
   value,
   onChange,
-  minDate,
+  minDate = defaultProps.minDate,
 }: DateTimePickerProps) {
   return (
     <Popover>
@@ -39,7 +43,7 @@ export function DateTimePicker({
       <PopoverContent className="w-auto p-0" align="start">
         <ReactDatePicker
           selected={value}
-          onChange={onChange}
+          onChange={(date) => onChange(date)}
           minDate={minDate}
           showTimeSelect
           dateFormat="MMMM d, yyyy h:mm aa"
