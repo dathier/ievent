@@ -23,6 +23,7 @@ interface Event {
   description: string;
   status: string;
   isPublished: boolean;
+  imageUrl: string;
 }
 
 interface EventListProps {
