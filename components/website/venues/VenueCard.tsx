@@ -14,6 +14,7 @@ interface VenueCardProps {
     id: number;
     name: string;
     location: string;
+    image: string;
   };
 }
 
