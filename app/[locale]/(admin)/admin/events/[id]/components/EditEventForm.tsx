@@ -146,6 +146,7 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
                       field.onChange(new Date()); // 或者 field.onChange(field.value)
                     }
                   }}
+                />
               </FormControl>
             </FormItem>
           )}
@@ -167,7 +168,7 @@ export function EditEventForm({ event, onSubmit }: EditEventFormProps) {
                       field.onChange(new Date()); // 或者 field.onChange(field.value)
                     }
                   }}
-                  />
+                />
               </FormControl>
             </FormItem>
           )}
