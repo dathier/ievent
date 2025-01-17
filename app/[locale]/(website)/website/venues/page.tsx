@@ -102,12 +102,12 @@ export default function VenuesPage() {
         </CardContent>
       </Card>
       <VenueList venues={paginatedVenues} />
-      <Pagination
+      {/* <Pagination
         className="justify-center"
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
-      />
+      /> */}
     </div>
   );
 }
