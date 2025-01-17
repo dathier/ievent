@@ -104,12 +104,12 @@ export default function EventsPage() {
       </Card>
       <EventList events={paginatedEvents} />
 
-      <Pagination
+      {/* <Pagination
         className="justify-center"
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
-      />
+      /> */}
     </div>
   );
 }
