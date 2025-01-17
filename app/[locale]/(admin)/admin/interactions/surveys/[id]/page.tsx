@@ -44,10 +44,11 @@ const surveySchema = z.object({
   questions: z.array(questionSchema),
 });
 
-export default function EditSurveyPage({ params }: { params: { id: string } }) {
+export default function SurveyPage({ params }: { params: { id: string } }) {
   const t = useTranslations("Admin.Interactions.Surveys");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const isCreating = params.id === "create";
 
   const form = useForm<z.infer<typeof surveySchema>>({
     resolver: zodResolver(surveySchema),
@@ -64,7 +65,7 @@ export default function EditSurveyPage({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    if (params.id !== "create") {
+    if (!isCreating) {
       fetchSurvey();
     }
   }, [params.id]);
@@ -90,11 +91,10 @@ export default function EditSurveyPage({ params }: { params: { id: string } }) {
   async function onSubmit(data: z.infer<typeof surveySchema>) {
     setIsLoading(true);
     try {
-      const url =
-        params.id === "create"
-          ? "/api/admin/surveys"
-          : `/api/admin/surveys/${params.id}`;
-      const method = params.id === "create" ? "POST" : "PUT";
+      const url = isCreating
+        ? "/api/admin/surveys"
+        : `/api/admin/surveys/${params.id}`;
+      const method = isCreating ? "POST" : "PUT";
 
       const response = await fetch(url, {
         method,
@@ -128,7 +128,7 @@ export default function EditSurveyPage({ params }: { params: { id: string } }) {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">
-        {params.id === "create" ? t("createSurvey") : t("editSurvey")}
+        {isCreating ? t("createSurvey") : t("editSurvey")}
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

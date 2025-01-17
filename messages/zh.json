@@ -613,6 +613,60 @@
 
       "filterCategory": "按类别筛选",
       "filterLocation": "按地点筛选"
+    },
+    "Interactions": {
+      "title": "互动管理",
+      "surveys": {
+        "title": "问卷调查",
+        "description": "创建和管理问卷调查",
+        "manage": "管理问卷"
+      },
+      "lotteries": {
+        "title": "抽奖",
+        "description": "创建和管理抽奖活动",
+        "manage": "管理抽奖"
+      },
+      "Surveys": {
+        "surveysList": "问卷列表",
+        "createSurvey": "创建问卷",
+        "editSurvey": "编辑问卷",
+        "surveyTitle": "问卷标题",
+        "surveyDescription": "问卷描述",
+        "questions": "问题",
+        "questionContent": "问题内容",
+        "questionType": "问题类型",
+        "selectQuestionType": "选择问题类型",
+        "multipleChoice": "多选题",
+        "singleChoice": "单选题",
+        "text": "文本题",
+        "options": "选项",
+        "optionContent": "选项内容",
+        "addOption": "添加选项",
+        "removeQuestion": "删除问题",
+        "addQuestion": "添加问题",
+        "saving": "保存中...",
+        "saveSurvey": "保存问卷",
+        "saveSuccess": "保存成功",
+        "saveSuccessDescription": "问卷已成功保存",
+        "saveError": "保存失败",
+        "saveErrorDescription": "保存问卷时出现错误，请稍后重试",
+        "fetchError": "获取失败",
+        "fetchErrorDescription": "获取问卷信息时出现错误，请稍后重试",
+        "deleteSuccess": "删除成功",
+        "deleteSuccessDescription": "问卷已成功删除",
+        "deleteError": "删除失败",
+        "deleteErrorDescription": "删除问卷时出现错误，请稍后重试",
+        "createdAt": "创建于",
+        "actions": "操作",
+        "edit": "编辑",
+        "delete": "删除",
+        "statusTitle": "问卷状态",
+        "status": {
+          "DRAFT": "草稿",
+          "PUBLISHED": "已发布",
+          "CLOSED": "已关闭"
+        }
+      }
     }
   },
   "Saas": {

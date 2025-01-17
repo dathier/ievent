@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
-
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -75,14 +75,16 @@ export default function SurveysPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">{t("surveysList")}</h1>
         <Button asChild>
-          <a href="/admin/interactions/surveys/create">{t("createSurvey")}</a>
+          <Link href="/admin/interactions/surveys/create">
+            {t("createSurvey")}
+          </Link>
         </Button>
       </div>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>{t("surveyTitle")}</TableHead>
-            <TableHead>{t("status")}</TableHead>
+            <TableHead>{t("statusTitle")}</TableHead>
             <TableHead>{t("createdAt")}</TableHead>
             <TableHead>{t("actions")}</TableHead>
           </TableRow>
@@ -98,9 +100,11 @@ export default function SurveysPage() {
               <TableCell>
                 <div className="space-x-2">
                   <Button asChild variant="outline" size="sm">
-                    <a href={`/admin/interactions/surveys/${survey.id}/edit`}>
+                    <Link
+                      href={`/admin/interactions/surveys/${survey.id}/edit`}
+                    >
                       {t("edit")}
-                    </a>
+                    </Link>
                   </Button>
                   <Button
                     variant="destructive"
