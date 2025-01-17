@@ -98,11 +98,9 @@ export default function SurveysPage() {
               <TableCell>
                 <div className="space-x-2">
                   <Button asChild variant="outline" size="sm">
-                    <LocaleLink
-                      href={`/admin/interactions/surveys/${survey.id}/edit`}
-                    >
+                    <a href={`/admin/interactions/surveys/${survey.id}/edit`}>
                       {t("edit")}
-                    </LocaleLink>
+                    </a>
                   </Button>
                   <Button
                     variant="destructive"
