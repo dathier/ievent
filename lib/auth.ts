@@ -1,6 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { prisma } from "./prisma";
-
+import { prisma } from "@/lib/prisma";
 export async function checkUserRole(allowedRoles: string[]) {
   const { userId } = await auth();
 
@@ -25,7 +24,7 @@ export async function checkUserRole(allowedRoles: string[]) {
 }
 
 export async function getCurrentUser() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return null;

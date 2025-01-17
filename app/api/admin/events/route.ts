@@ -16,6 +16,7 @@ export async function GET() {
 
     const events = await prisma.event.findMany({
       where: user.role === "admin" ? {} : { userId: user.id },
+
       select: {
         id: true,
         title: true,
@@ -40,7 +41,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -65,6 +66,7 @@ export async function POST(request: Request) {
         requiresRegistration: data.requiresRegistration,
         isPublished: data.isPublished,
         isFeatured: data.isFeatured,
+        userId: user.id, // 添加 userId 字段
       },
     });
     return NextResponse.json(newEvent);
