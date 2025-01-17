@@ -16,27 +16,27 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 // 组合 Clerk 和 Next-intl 中间件
-const combinedMiddleware = (request) => {
-  const pathname = request.nextUrl.pathname;
+// const combinedMiddleware = (request) => {
+//   const pathname = request.nextUrl.pathname;
 
-  // 如果是 API 路由，直接返回
-  if (pathname.startsWith("/api/")) {
-    return;
-  }
+//   // 如果是 API 路由，直接返回
+//   if (pathname.startsWith("/api/")) {
+//     return;
+//   }
 
-  // 对于非 API 路由，应用国际化中间件
-  const intlResponse = intlMiddleware(request);
-  if (intlResponse) return intlResponse;
+//   // 对于非 API 路由，应用国际化中间件
+//   const intlResponse = intlMiddleware(request);
+//   if (intlResponse) return intlResponse;
 
-  // 最后应用 Clerk 中间件
-  // return clerkMiddleware(async (auth, req) => {
-  //   if (!isPublicRoute(req)) {
-  //     await auth.protect();
-  //   }
-  // })(request);
-};
+//   // 最后应用 Clerk 中间件
+//   // return clerkMiddleware(async (auth, req) => {
+//   //   if (!isPublicRoute(req)) {
+//   //     await auth.protect();
+//   //   }
+//   // })(request);
+// };
 
-export default combinedMiddleware;
+//export default combinedMiddleware;
 
 // Bug 修复：修改 matcher 以正确匹配路由
 export const config = {
