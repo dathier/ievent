@@ -17,7 +17,7 @@ type heroContent = {
 
 export function Hero() {
   const t = useTranslations("Frontend.hero");
-  const [heroContent, setHeroContent] = useState<heroContent[]>([]);
+  const [heroContent, setHeroContent] = useState<heroContent | null>(null);
 
   useEffect(() => {
     fetchHeroContent();
@@ -41,7 +41,7 @@ export function Hero() {
     <section className="relative h-[calc(100vh-3.5rem)] w-full overflow-hidden bg-gray-900">
       <div className="absolute inset-0">
         <Image
-          src={heroContent.heroBackgroundImage}
+          src={heroContent?.heroBackgroundImage || "/hero.jpg"}
           alt="Background"
           layout="fill"
           objectFit="cover"
@@ -52,13 +52,13 @@ export function Hero() {
       <div className="relative h-full container mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
-            {heroContent.heroTitle}
+            {heroContent?.heroTitle || "iEvents"}
             <span className="block text-indigo-400">
-              {heroContent.heroSubtitle}
+              {heroContent?.heroSubtitle}
             </span>
           </h1>
           <p className="mt-6 text-xl text-gray-300">
-            {heroContent.heroDescription}
+            {heroContent?.heroDescription}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Button
