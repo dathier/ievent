@@ -2,12 +2,12 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
 import { AppConfig } from "@/lib/AppConfig";
+import { getUserRole } from "@/lib/user-roles";
 
 const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
   defaultLocale: AppConfig.defaultLocale,
-  alternateLinks: false,
-  localePrefix: "as-needed",
+  localePrefix: AppConfig.localePrefix,
 });
 
 const isProtectedRoute = createRouteMatcher([
@@ -16,7 +16,7 @@ const isProtectedRoute = createRouteMatcher([
   "/api/:path*",
 ]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   const { pathname } = req.nextUrl;
 
   if (pathname.includes("/:locale/")) {
@@ -33,13 +33,20 @@ export default clerkMiddleware((auth, req) => {
     );
   }
 
-  // 如果是 API 路由，直接返回
+  // If it's an API route, return directly
   if (pathname.startsWith("/api/")) {
     return;
   }
 
   if (isProtectedRoute(req)) {
     auth.protect();
+    const userId = auth.userId;
+    if (userId) {
+      const userRole = await getUserRole(userId);
+      if (pathname.startsWith("/admin") && userRole !== "admin") {
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+      }
+    }
   }
 
   return intlMiddleware(req);

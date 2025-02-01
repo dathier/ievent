@@ -13,7 +13,17 @@ export async function GET(
     }
 
     const survey = await prisma.survey.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: Number.parseInt(params.id) },
+      include: {
+        questions: {
+          include: {
+            options: true,
+          },
+          orderBy: {
+            order: "asc",
+          },
+        },
+      },
     });
 
     if (!survey) {
@@ -40,11 +50,76 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { title, description } = await request.json();
+    const body = await request.json();
+    const { title, description, questions, status, currentQuestion } = body;
 
-    const updatedSurvey = await prisma.survey.update({
-      where: { id: parseInt(params.id) },
-      data: { title, description },
+    const surveyId = Number.parseInt(params.id);
+
+    // Start a transaction
+    const updatedSurvey = await prisma.$transaction(async (prisma) => {
+      // Update survey details
+      const survey = await prisma.survey.update({
+        where: { id: surveyId },
+        data: {
+          title,
+          description,
+          status,
+          currentQuestion:
+            currentQuestion !== undefined ? currentQuestion : undefined,
+        },
+      });
+
+      // Delete existing questions and options
+      await prisma.option.deleteMany({
+        where: { question: { surveyId } },
+      });
+      await prisma.question.deleteMany({
+        where: { surveyId },
+      });
+
+      // Create new questions and options
+      if (questions && questions.length > 0) {
+        await prisma.question.createMany({
+          data: questions.map((question, index) => ({
+            surveyId,
+            content: question.content,
+            type: question.type,
+            order: index,
+          })),
+        });
+
+        // Create options for questions that have them
+        for (const question of questions) {
+          if (question.options && question.options.length > 0) {
+            const dbQuestion = await prisma.question.findFirst({
+              where: { surveyId, content: question.content },
+            });
+            if (dbQuestion) {
+              await prisma.option.createMany({
+                data: question.options.map((option) => ({
+                  questionId: dbQuestion.id,
+                  content: option.content,
+                })),
+              });
+            }
+          }
+        }
+      }
+
+      // Fetch the updated survey with questions and options
+      return prisma.survey.findUnique({
+        where: { id: surveyId },
+        include: {
+          questions: {
+            include: {
+              options: true,
+            },
+            orderBy: {
+              order: "asc",
+            },
+          },
+        },
+      });
     });
 
     return NextResponse.json(updatedSurvey);
@@ -68,7 +143,7 @@ export async function DELETE(
     }
 
     await prisma.survey.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: Number.parseInt(params.id) },
     });
 
     return NextResponse.json({ message: "Survey deleted successfully" });

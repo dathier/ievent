@@ -173,21 +173,24 @@ model User {
 // Survey models...
 
 model Survey {
-  id          Int          @id @default(autoincrement())
-  title       String
-  description String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  questions   Question[]
-  responses   Response[]
-  status      SurveyStatus @default(DRAFT)
-  qrCode      String?
+  id              Int           @id @default(autoincrement())
+  title           String
+  description     String?
+  questions       Question[]
+  responses       Response[]
+  status          SurveyStatus  @default(DRAFT)
+  currentQuestion Int           @default(0)
+  qrCode          String?       @db.Text // Change to Text type to handle large strings
+  isStarted       Boolean       @default(false) // Add isStarted field
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  Participant     Participant[]
 }
 
 model Question {
   id        Int          @id @default(autoincrement())
   surveyId  Int
-  survey    Survey       @relation(fields: [surveyId], references: [id])
+  survey    Survey       @relation(fields: [surveyId], references: [id], onDelete: Cascade)
   content   String
   type      QuestionType
   options   Option[]
@@ -198,20 +201,35 @@ model Question {
 model Option {
   id         Int      @id @default(autoincrement())
   questionId Int
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   content    String
-  order      Int
 }
 
 model Response {
   id         Int      @id @default(autoincrement())
   surveyId   Int
-  survey     Survey   @relation(fields: [surveyId], references: [id])
+  survey     Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
   questionId Int
-  question   Question @relation(fields: [questionId], references: [id])
-  answer     String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answer     String   @db.Text
   respondent String
+  deviceInfo Json? // Store detailed device information
   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([surveyId])
+  @@index([questionId])
+}
+
+model Participant {
+  id         Int      @id @default(autoincrement())
+  surveyId   Int
+  survey     Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  name       String
+  deviceInfo Json
+  createdAt  DateTime @default(now())
+
+  @@index([surveyId])
 }
 
 enum SurveyStatus {
@@ -224,4 +242,46 @@ enum QuestionType {
   MULTIPLE_CHOICE
   SINGLE_CHOICE
   TEXT
+}
+
+model Lottery {
+  id              Int                  @id @default(autoincrement())
+  name            String
+  numberOfWinners Int
+  status          String               @default("PENDING")
+  winnersJson     String?
+  isStarted       Boolean              @default(false)
+  prizes          Prize[]
+  participants    LotteryParticipant[]
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+}
+
+model Prize {
+  id          Int     @id @default(autoincrement())
+  name        String
+  quantity    Int
+  probability Float
+  lotteryId   Int
+  lottery     Lottery @relation(fields: [lotteryId], references: [id])
+}
+
+model LotteryParticipant {
+  id        Int      @id @default(autoincrement())
+  lotteryId Int
+  lottery   Lottery  @relation(fields: [lotteryId], references: [id])
+  name      String
+  email     String?
+  isWinner  Boolean  @default(false)
+  prizeId   Int?
+  createdAt DateTime @default(now())
+}
+
+model QueueItem {
+  id        Int      @id @default(autoincrement())
+  number    Int
+  people    Int
+  queueType String
+  status    String
+  timestamp DateTime @default(now())
 }

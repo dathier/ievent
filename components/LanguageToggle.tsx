@@ -11,7 +11,18 @@ export function LanguageToggle() {
 
   const toggleLanguage = () => {
     const newLocale = locale === "en" ? "zh" : "en";
-    router.push(pathname.replace(`/${locale}`, `/${newLocale}`));
+    let newPathname;
+    // 处理根路径的情况
+    if (pathname === "/") {
+      newPathname = `/${newLocale}`;
+    } else {
+      // 确保 pathname 包含 locale 前缀
+      const pathWithLocale = pathname.startsWith(`/${locale}`)
+        ? pathname
+        : `/${locale}${pathname}`;
+      newPathname = pathWithLocale.replace(`/${locale}`, `/${newLocale}`);
+    }
+    router.push(newPathname);
   };
 
   return (

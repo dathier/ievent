@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import * as z from "zod";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -27,11 +28,13 @@ import {
 import { toast } from "@/hooks/use-toast";
 
 const questionSchema = z.object({
+  id: z.number().optional(),
   content: z.string().min(1, "Question content is required"),
   type: z.enum(["MULTIPLE_CHOICE", "SINGLE_CHOICE", "TEXT"]),
   options: z
     .array(
       z.object({
+        id: z.number().optional(),
         content: z.string().min(1, "Option content is required"),
       })
     )
@@ -44,11 +47,10 @@ const surveySchema = z.object({
   questions: z.array(questionSchema),
 });
 
-export default function SurveyPage({ params }: { params: { id: string } }) {
+export default function EditSurveyPage({ params }: { params: { id: string } }) {
   const t = useTranslations("Admin.Interactions.Surveys");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const isCreating = params.id === "create";
 
   const form = useForm<z.infer<typeof surveySchema>>({
     resolver: zodResolver(surveySchema),
@@ -65,19 +67,15 @@ export default function SurveyPage({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    if (!isCreating) {
+    if (params.id !== "create") {
       fetchSurvey();
     }
   }, [params.id]);
 
   async function fetchSurvey() {
     try {
-      const response = await fetch(`/api/admin/surveys/${params.id}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch survey");
-      }
-      const data = await response.json();
-      form.reset(data);
+      const response = await axios.get(`/api/admin/surveys/${params.id}`);
+      form.reset(response.data);
     } catch (error) {
       console.error("Error fetching survey:", error);
       toast({
@@ -91,22 +89,13 @@ export default function SurveyPage({ params }: { params: { id: string } }) {
   async function onSubmit(data: z.infer<typeof surveySchema>) {
     setIsLoading(true);
     try {
-      const url = isCreating
-        ? "/api/admin/surveys"
-        : `/api/admin/surveys/${params.id}`;
-      const method = isCreating ? "POST" : "PUT";
+      const url =
+        params.id === "create"
+          ? "/api/admin/surveys"
+          : `/api/admin/surveys/${params.id}`;
+      const method = params.id === "create" ? "post" : "put";
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save survey");
-      }
+      const response = await axios[method](url, data);
 
       toast({
         title: t("saveSuccess"),
@@ -127,9 +116,17 @@ export default function SurveyPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">
-        {isCreating ? t("createSurvey") : t("editSurvey")}
-      </h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">
+          {params.id === "create" ? t("createSurvey") : t("editSurvey")}
+        </h1>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/admin/interactions/surveys")}
+        >
+          {t("return")}
+        </Button>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

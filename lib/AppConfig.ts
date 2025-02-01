@@ -1,5 +1,10 @@
 export const AppConfig = {
-  locales: ["en", "zh"],
-  defaultLocale: "en",
-  localePrefix: "always", // 'as-needed' | 'always' | 'never'
-} as const;
+  locales: ["en", "zh"] as const,
+  defaultLocale: "en" as const,
+  localePrefix: "always" as const, // 'as-needed' | 'always' | 'never'
+  pages: {
+    "*": ["common"],
+    "/": ["home"],
+    "/website/interactive/ideas": ["InteractiveIdeas"],
+  },
+};

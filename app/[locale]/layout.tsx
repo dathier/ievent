@@ -2,6 +2,7 @@ import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/provider/Toaster";
 
 export const metadata = {
   title: "iEvents",
@@ -35,6 +36,7 @@ export default async function RootLayout({
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
           </NextIntlClientProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

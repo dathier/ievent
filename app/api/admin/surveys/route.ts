@@ -38,12 +38,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { title, description } = await request.json();
+    const body = await request.json();
+    const { title, description, questions } = body;
 
     const newSurvey = await prisma.survey.create({
       data: {
         title,
         description,
+        questions: {
+          create: questions.map((question, index) => ({
+            content: question.content,
+            type: question.type,
+            order: index,
+            options: {
+              create: question.options?.map((option) => ({
+                content: option.content,
+              })),
+            },
+          })),
+        },
+      },
+      include: {
+        questions: {
+          include: {
+            options: true,
+          },
+          orderBy: {
+            order: "asc",
+          },
+        },
       },
     });
 

@@ -14,11 +14,28 @@
     "nav": {
       "home": "首页",
       "events": "活动",
+      "allEvents": "所有活动",
+      "allEventsDescription": "浏览所有活动",
+      "upcomingEvents": "即将举行的活动",
+      "upcomingEventsDescription": "即将举行的活动",
+      "featuredEvents": "特色活动",
+      "featuredEventsDescription": "查看特色活动",
       "venues": "场地",
       "pricing": "价格",
       "about": "关于",
       "login": "登录",
-      "signup": "注册"
+      "signup": "注册",
+      "loginAdmin": "管理",
+      "interactive": "互动",
+      "interactiveFeatures": "互动功能",
+      "interactiveFeaturesDescription": "iEvents提供多种互动功能，包括问卷调查和抽奖。",
+      "surveys": "问卷调查",
+      "surveysDescription": "创建和管理问卷调查",
+      "lotteries": "抽奖",
+      "lotteriesDescription": "创建和管理抽奖活动",
+      "queue": "排队",
+      "queueDescription": "管理排队系统",
+      "interactiveIdeas": "互动创意"
     },
     "hero": {
       "title": "发现精彩活动",
@@ -47,6 +64,47 @@
       "terms": "服务条款",
       "privacy": "隐私政策",
       "allRightsReserved": "版权所有"
+    },
+    "interactiveFeatures": {
+      "surveys": "问卷调查",
+      "lotteries": "抽奖"
+    },
+
+    "InteractiveIdeas": {
+      "title": "100个互动活动创意",
+      "description": "探索我们全面的互动活动创意列表，提升您的下一次活动体验。",
+      "searchPlaceholder": "搜索创意...",
+      "allCategories": "所有类别",
+      "learnMore": "了解更多",
+      "noIdeasFound": "没有找到符合您搜索条件的创意。",
+      "ideaNotFound": "未找到该创意。",
+      "benefit": "优势",
+      "implementation": "实施",
+      "examples": "示例",
+      "categories": {
+        "participantInteraction": "参与者互动",
+        "virtualExperiences": "虚拟体验",
+        "realTimeInteraction": "实时互动",
+        "dataVisualization": "数据可视化",
+        "innovativeTechnology": "创新技术",
+        "educationAndSkillDevelopment": "教育与技能发展",
+        "innovativeInteractionAndExperience": "创新互动与体验",
+        "advancedTechnologyAndInnovativeExperience": "先进技术与创新体验",
+        "cuttingEdgeTechnologyApplications": "前沿技术应用",
+        "innovativeInteractionAndSocialExperience": "创新互动与社交体验"
+      },
+      "ideas": {
+        "realTimeVoting": {
+          "title": "实时投票系统",
+          "description": "实现基于WebSocket的实时投票界面。",
+          "benefit": "即时收集观众反馈并提高参与度。"
+        },
+        "digitalCheckInWall": {
+          "title": "数字签到墙",
+          "description": "创建一个大屏幕显示，参与者可以通过智能手机签到。",
+          "benefit": "创造互动氛围并展示参与者数据。"
+        }
+      }
     }
   },
   "Shared": {
@@ -209,6 +267,56 @@
     "speakers": {
       "title": "活动演讲者"
     }
+  },
+  "Surveys": {
+    "title": "问卷调查",
+    "enterName": "请输入您的姓名",
+    "startSurvey": "开始问卷调查",
+    "loading": "加载中...",
+    "surveyNotFound": "问卷调查未找到",
+    "enterAnswer": "请输入您的答案",
+    "finish": "完成",
+    "nextQuestion": "下一题",
+    "submitSuccess": "问卷调查提交成功",
+    "submitError": "问卷调查提交失败",
+    "surveyCompleted": "问卷调查已完成",
+    "surveyCompletedDescription": "感谢您的参与！",
+    "thankYouMessage": "感谢您的参与！",
+    "returnHome": "返回首页",
+    "waitingForStart": "等待开始",
+    "noQuestionsAvailable": "没有可用的问卷调查。",
+    "submit": "提交",
+    "submitting": "提交中...",
+    "waitingForNextQuestion": "等待下一题",
+    "answered": "已回答",
+    "surveyNotStarted": "问卷调查未开始。",
+    "fetchError": "获取失败",
+    "fetchErrorDescription": "获取问卷信息时出现错误，请稍后重试"
+  },
+  "Lottery": {
+    "registerForLottery": "注册参与抽奖",
+    "name": "姓名",
+    "email": "电子邮箱",
+    "register": "注册",
+    "registering": "正在注册...",
+    "registrationSuccess": "注册成功",
+    "registrationSuccessDescription": "您已成功注册参与抽奖",
+    "registrationError": "注册失败",
+    "registrationErrorDescription": "注册时发生错误，请稍后重试",
+    "lotteryResult": "抽奖结果",
+    "startLottery": "开始抽奖",
+    "spinning": "正在抽奖...",
+    "winners": "获奖者",
+    "noParticipants": "暂无参与者",
+    "fetchError": "获取数据失败",
+    "fetchErrorDescription": "获取参与者数据时发生错误",
+    "drawError": "抽奖失败",
+    "drawErrorDescription": "进行抽奖时发生错误",
+    "registerLink": "注册参与",
+    "resultLink": "查看结果",
+    "noPrize": "感谢参与",
+    "result": "抽奖结果",
+    "lotteryNotStarted": "抽奖未开始"
   },
   "Admin": {
     "Website": {
@@ -665,77 +773,97 @@
           "DRAFT": "草稿",
           "PUBLISHED": "已发布",
           "CLOSED": "已关闭"
-        }
-      }
-    }
-  },
-  "Saas": {
-    "dashboard": "仪表板",
-    "events": "活动",
-    "profile": "个人资料",
-    "signIn": "登录",
-    "signUp": "注册",
-
-    "Dashboard": {
-      "welcome": "欢迎，{name}",
-      "totalEvents": "活动总数",
-      "upcomingEvents": "即将到来的活动",
-      "totalAttendees": "参加活动的人数",
-      "createNewEvent": "创建新活动",
-
-      "loading": "加载中...",
-
-      "totalRevenue": "总收入",
-      "eventsByMonth": "每月活动数",
-      "attendeesByType": "参与者类型分布"
-    },
-    "Events": {
-      "editEvent": "编辑活动",
-      "eventsList": "活动列表",
-      "eventTitle": "活动标题",
-      "eventDate": "活动日期",
-      "eventLocation": "活动地点",
-      "status": "状态",
-      "actions": "操作",
-      "createEvent": "创建活动",
-      "updateSuccess": "更新成功",
-      "updateSuccessDescription": "活动已成功更新。",
-      "updateError": "更新失败",
-      "updateErrorDescription": "更新活动时出现错误，请稍后重试。",
-      "updating": "更新中...",
-      "updateEvent": "更新活动",
-      "Manage": {
-        "title": "管理活动：{eventName}",
+        },
+        "close": "关闭",
+        "publish": "发布",
+        "test": "测试",
+        "publishSurvey": "发布问卷",
+        "dashboard": "仪表板",
+        "control": "控制",
+        "retract": "撤回",
+        "surveyControl": "问卷控制",
+        "currentQuestion": "当前题",
+        "previousQuestion": "上一题",
+        "nextQuestion": "下一题",
         "loading": "加载中...",
-        "tabs": {
-          "details": "活动详情",
-          "exhibitors": "参展商",
-          "guests": "嘉宾",
-          "schedule": "日程安排",
-          "materials": "资料",
-          "news": "新闻",
-          "videos": "视频",
-          "photos": "照片",
-          "livestream": "直播",
-          "registrations": "注册"
+        "surveyDashboard": "问卷仪表板",
+        "totalResponses": "总响应数",
+        "responses": "响应",
+        "return": "返回",
+        "completionRate": "完成率",
+        "averageTimePerQuestion": "每题平均时间",
+        "responseDistribution": "响应分布",
+        "qrCode": "二维码",
+        "endSurvey": "结束问卷",
+        "startSurvey": "开始问卷",
+        "surveyStatus": "问卷状态",
+        "notStarted": "未开始",
+        "inProgress": "进行中",
+        "completed": "已完成",
+        "closed": "已关闭",
+        "qrCodeTitle": "问卷二维码",
+        "surveyEnded": "问卷已结束",
+        "surveyEndedDescription": "问卷已结束，无法继续回答。",
+        "surveyStarted": "问卷已开始",
+        "surveyStartedDescription": "问卷已开始，请回答问题。",
+        "exportCSV": "导出为CSV",
+        "exportPDF": "导出为PDF",
+        "totalQuestions": "总问题数",
+        "questionProgress": "问题进度",
+        "respondentInfo": "受访者信息",
+        "respondentList": "受访者列表",
+        "deviceTypes": "设备类型",
+        "generateQrCode": "生成二维码",
+        "browsers": "浏览器",
+        "exportError": "导出失败",
+        "exportErrorDescription": "导出数据时出现错误，请稍后重试。"
+      },
+      "Lotteries": {
+        "title": "抽奖管理",
+        "eventId": "活动ID",
+        "create": "创建抽奖",
+        "actions": "操作",
+        "lotteryName": "抽奖名称",
+        "numberOfWinners": "获奖者数量",
+        "lotteriesList": "抽奖列表",
+        "createLottery": "创建抽奖",
+        "editLottery": "编辑抽奖",
+        "lotteryTitle": "抽奖标题",
+        "winnerList": "获奖者列表",
+        "noPrize": "无奖品",
+        "lotteryDescription": "抽奖描述",
+        "prize": "奖品",
+        "prizeDescription": "奖品描述",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "participants": "参与者",
+        "participantsDescription": "参与者数量",
+        "winner": "获奖者",
+        "winnerDescription": "获奖者",
+        "statusTitle": "状态",
+        "statusDescription": "抽奖状态",
+        "registerLink": "注册地址",
+        "resultLink": "查看结果",
+        "drawWinners": "抽取获奖者",
+        "start": "开始",
+        "end": "结束",
+        "draw": "抽奖",
+        "stop": "停止",
+        "prizeName": "奖品名称",
+        "prizeList": "奖品列表",
+        "prizeQuantity": "奖品数量",
+        "winnerName": "获奖者姓名",
+        "delete": "删除",
+        "addPrize": "添加奖品",
+        "deleteSuccess": "删除成功",
+        "deleteSuccessDescription": "抽奖已成功删除",
+        "prizeProbability": "奖品概率",
+        "searchLotteries": "搜索抽奖",
+        "status": {
+          "COMPLETED": "已完成",
+          "PENDING": "待处理"
         }
       }
-    },
-    "Profile": {
-      "title": "个人资料",
-      "fullName": "全名",
-      "email": "电子邮件",
-      "company": "公司",
-      "phone": "电话",
-      "saving": "保存中...",
-      "saveChanges": "保存更改",
-      "updateSuccess": "更新成功",
-      "updateSuccessDescription": "您的个人资料已成功更新。",
-      "updateError": "更新失败",
-      "updateErrorDescription": "更新个人资料时出现错误，请稍后重试。"
     }
-  },
-  "Auth": {
-    "SignIn": "登录"
   }
 }

@@ -15,7 +15,7 @@ export default function InteractionsPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">{t("title")}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>{t("surveys.title")}</CardTitle>
@@ -39,6 +39,17 @@ export default function InteractionsPage() {
               <Link href="/admin/interactions/lotteries">
                 {t("lotteries.manage")}
               </Link>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("queue.title")}</CardTitle>
+            <CardDescription>{t("queue.description")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/admin/interactions/queue">{t("queue.manage")}</Link>
             </Button>
           </CardContent>
         </Card>

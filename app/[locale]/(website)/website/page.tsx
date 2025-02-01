@@ -1,6 +1,7 @@
 import { Hero } from "@/components/website/home/Hero";
 import { FeaturedEvents } from "@/components/website/home/FeaturedEvents";
 import { RecommendedVenues } from "@/components/website/home/RecommendedVenues";
+import { RecommendedInteractive } from "@/components/website/home/RecommendedInteractive";
 
 export const metadata = {
   title: "iEvents - Your Event Management Platform",
@@ -9,10 +10,11 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className=" space-y-16">
+    <div className="space-y-16">
       <Hero />
       <FeaturedEvents />
       <RecommendedVenues />
+      <RecommendedInteractive />
     </div>
   );
 }
